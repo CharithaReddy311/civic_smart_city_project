@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login — Civic Smart City</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink: #0a0e1a;
+            --surface: #f4f6fb;
+            --card: #ffffff;
+            --accent: #1a56db;
+            --accent-glow: rgba(26,86,219,0.18);
+            --accent2: #06b6d4;
+            --border: #dde3f0;
+            --muted: #7b859e;
+            --error: #e53e3e;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ── Left Panel ── */
+        .hero {
+            flex: 1;
+            background: var(--ink);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px 52px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 520px; height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(26,86,219,0.35) 0%, transparent 70%);
+            top: -120px; left: -120px;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 360px; height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(6,182,212,0.22) 0%, transparent 70%);
+            bottom: 60px; right: -80px;
+        }
+
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-logo-icon {
+            width: 40px; height: 40px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+        .hero-logo span {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(26,86,219,0.3);
+            border: 1px solid rgba(26,86,219,0.5);
+            color: var(--accent2);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 5px 14px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(36px, 4vw, 52px);
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero-title span { color: var(--accent2); }
+        .hero-desc {
+            color: rgba(255,255,255,0.55);
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 380px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 36px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            margin-top: 2px;
+        }
+
+        /* Grid decoration */
+        .grid-dots {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            z-index: 0;
+        }
+
+        /* ── Right Panel ── */
+        .auth-panel {
+            width: 480px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 52px;
+            background: var(--card);
+            position: relative;
+        }
+
+        .auth-top {
+            margin-bottom: 36px;
+        }
+        .auth-top h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+        .auth-top p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+        .auth-top p a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .auth-top p a:hover { text-decoration: underline; }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 18px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink);
+            margin-bottom: 7px;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+        .input-icon {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+            font-size: 16px;
+            pointer-events: none;
+            display: flex;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 11px 14px 11px 40px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--ink);
+            background: var(--surface);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none;
+        }
+        input:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: #fff;
+        }
+        input.error { border-color: var(--error); }
+
+        .error-msg {
+            font-size: 12px;
+            color: var(--error);
+            margin-top: 5px;
+            display: none;
+        }
+        .error-msg.show { display: block; }
+
+        .forgot {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 22px;
+        }
+        .forgot a {
+            font-size: 13px;
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary:hover {
+            background: #1448c0;
+            box-shadow: 0 6px 24px rgba(26,86,219,0.28);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .btn-loader {
+            display: none;
+            width: 18px; height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 13.5px;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .alert.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .alert.error   { background: #fdecea; color: #c62828; border: 1px solid #ef9a9a; }
+        .alert.show    { display: block; }
+
+        /* Divider */
+        .divider {
+            display: flex; align-items: center; gap: 12px;
+            margin: 22px 0;
+            color: var(--muted); font-size: 12px;
+        }
+        .divider::before, .divider::after {
+            content: ''; flex: 1;
+            height: 1px; background: var(--border);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+        .signup-link a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+        /* Page load animation */
+        .auth-panel { animation: slideIn 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        @media (max-width: 860px) {
+            .hero { display: none; }
+            .auth-panel { width: 100%; padding: 40px 28px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Left Hero Panel -->
+<div class="hero">
+    <div class="grid-dots"></div>
+
+    <div class="hero-logo">
+        <div class="hero-logo-icon">🏙️</div>
+        <span>Civic Smart City</span>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-tag">Powered by Intelligence</div>
+        <h1 class="hero-title">Building <span>Smarter</span><br>Cities Together</h1>
+        <p class="hero-desc">A unified platform for citizens, officers, and administrators to collaborate, report issues, and drive real civic change.</p>
+    </div>
+
+    <div class="hero-stats">
+        <div class="stat">
+            <div class="stat-num">12K+</div>
+            <div class="stat-label">Active Citizens</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">340+</div>
+            <div class="stat-label">Issues Resolved</div>
+        </div>
+        <div class="stat">
+            <div class="stat-num">98%</div>
+            <div class="stat-label">Satisfaction</div>
+        </div>
+    </div>
+</div>
+
+<!-- Right Auth Panel -->
+<div class="auth-panel">
+    <div class="auth-top">
+        <h2>Welcome back</h2>
+        <p>New to the platform? <a href="signup.html">Create an account</a></p>
+    </div>
+
+    <div id="alertBox" class="alert"></div>
+
+    <form id="loginForm" novalidate>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-wrap">
+                <span class="input-icon">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </span>
+                <input type="text" id="username" placeholder="Enter your username" autocomplete="username">
+            </div>
+            <div class="error-msg" id="usernameErr">Username is required.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+                <span class="input-icon">
+                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                    </svg>
+                </span>
+                <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+            </div>
+            <div class="error-msg" id="passwordErr">Password is required.</div>
+        </div>
+
+        <div class="forgot"><a href="#">Forgot password?</a></div>
+
+        <button type="submit" class="btn-primary" id="loginBtn">
+            <span id="btnText">Sign In</span>
+            <div class="btn-loader" id="btnLoader"></div>
+        </button>
+    </form>
+
+    <div class="signup-link">
+        Don't have an account? <a href="signup.html">Register now →</a>
+    </div>
+</div>
+
+<script>
+    function showAlert(message, type) {
+        const box = document.getElementById('alertBox');
+        box.textContent = message;
+        box.className = `alert ${type} show`;
+    }
+
+    function setLoading(loading) {
+        const btn = document.getElementById('loginBtn');
+        const text = document.getElementById('btnText');
+        const loader = document.getElementById('btnLoader');
+        btn.disabled = loading;
+        text.style.display = loading ? 'none' : 'block';
+        loader.style.display = loading ? 'block' : 'none';
+    }
+
+    function validate() {
+        let valid = true;
+        const u = document.getElementById('username');
+        const p = document.getElementById('password');
+        const uErr = document.getElementById('usernameErr');
+        const pErr = document.getElementById('passwordErr');
+
+        u.classList.remove('error'); uErr.classList.remove('show');
+        p.classList.remove('error'); pErr.classList.remove('show');
+
+        if (!u.value.trim()) { u.classList.add('error'); uErr.classList.add('show'); valid = false; }
+        if (!p.value.trim()) { p.classList.add('error'); pErr.classList.add('show'); valid = false; }
+        return valid;
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (!validate()) return;
+
+        setLoading(true);
+        const data = {
+            username: document.getElementById('username').value.trim(),
+            password: document.getElementById('password').value
+        };
+
+        try {
+            const res = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+
+            if (res.ok && result.token) {
+                // ✅ Save with keys that dashboard.html expects
+                localStorage.setItem('civicpulse_token', result.token);
+                localStorage.setItem('civicpulse_user', JSON.stringify({
+                    username: data.username,
+                    role: result.role || 'CITIZEN'
+                }));
+                showAlert('Login successful! Redirecting…', 'success');
+                setTimeout(() => {
+                    if (result.role === 'ADMIN') {
+                    window.location.href = 'admin-dashboard.html';
+                } else if (result.role === 'OFFICER') {
+                    window.location.href = 'officer-dashboard.html';
+                } else {
+                    window.location.href = 'dashboard.html';
+                }}, 1000);
+            } else {
+                showAlert(result.error || 'Invalid credentials. Please try again.', 'error');
+            }
+        } catch (err) {
+            showAlert('Server error. Please try again later.', 'error');
+        } finally {
+            setLoading(false);
+        }
+    });
+</script>
+</body>
+</html>

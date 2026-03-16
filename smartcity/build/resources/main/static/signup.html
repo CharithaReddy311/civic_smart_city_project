@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register — Civic Smart City</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink: #0a0e1a;
+            --surface: #f4f6fb;
+            --card: #ffffff;
+            --accent: #1a56db;
+            --accent-glow: rgba(26,86,219,0.18);
+            --accent2: #06b6d4;
+            --border: #dde3f0;
+            --muted: #7b859e;
+            --error: #e53e3e;
+            --citizen: #10b981;
+            --officer: #f59e0b;
+            --admin: #8b5cf6;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface);
+            min-height: 100vh;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* ── Left Panel ── */
+        .hero {
+            flex: 1;
+            background: var(--ink);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px 52px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 520px; height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(26,86,219,0.35) 0%, transparent 70%);
+            top: -120px; left: -120px;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 360px; height: 360px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(6,182,212,0.22) 0%, transparent 70%);
+            bottom: 60px; right: -80px;
+        }
+        .grid-dots {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            z-index: 0;
+        }
+        .hero-logo {
+            display: flex; align-items: center; gap: 12px;
+            position: relative; z-index: 1;
+        }
+        .hero-logo-icon {
+            width: 40px; height: 40px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+        }
+        .hero-logo span {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px; font-weight: 700;
+            color: #fff; letter-spacing: 0.02em;
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-tag {
+            display: inline-block;
+            background: rgba(26,86,219,0.3);
+            border: 1px solid rgba(26,86,219,0.5);
+            color: var(--accent2);
+            font-size: 11px; font-weight: 500;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 5px 14px; border-radius: 100px;
+            margin-bottom: 24px;
+        }
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(30px, 3.5vw, 46px);
+            font-weight: 800; color: #fff; line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        .hero-title span { color: var(--accent2); }
+        .hero-desc {
+            color: rgba(255,255,255,0.55);
+            font-size: 14px; line-height: 1.7;
+            max-width: 340px; margin-bottom: 36px;
+        }
+
+        /* Role cards in hero */
+        .role-cards {
+            display: flex; flex-direction: column; gap: 10px;
+            position: relative; z-index: 1;
+        }
+        .role-card {
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+        .role-dot {
+            width: 10px; height: 10px;
+            border-radius: 50%; flex-shrink: 0;
+        }
+        .role-card-title {
+            font-size: 13px; font-weight: 600; color: #fff;
+        }
+        .role-card-desc {
+            font-size: 11px; color: rgba(255,255,255,0.4);
+            margin-top: 1px;
+        }
+
+        /* ── Right Panel ── */
+        .auth-panel {
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px 52px;
+            background: var(--card);
+            overflow-y: auto;
+            animation: slideIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .auth-top { margin-bottom: 28px; }
+        .auth-top h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px; font-weight: 700;
+            color: var(--ink); margin-bottom: 6px;
+        }
+        .auth-top p { color: var(--muted); font-size: 14px; }
+        .auth-top p a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+        /* Role Selector */
+        .role-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+        .role-option { display: none; }
+        .role-option + label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 8px;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .role-option + label .role-emoji { font-size: 22px; }
+        .role-option + label .role-name {
+            font-size: 12px; font-weight: 600;
+            color: var(--muted);
+            font-family: 'Syne', sans-serif;
+        }
+
+        #role-citizen:checked + label {
+            border-color: var(--citizen);
+            background: rgba(16,185,129,0.06);
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.12);
+        }
+        #role-citizen:checked + label .role-name { color: var(--citizen); }
+
+        #role-officer:checked + label {
+            border-color: var(--officer);
+            background: rgba(245,158,11,0.06);
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.12);
+        }
+        #role-officer:checked + label .role-name { color: var(--officer); }
+
+        #role-admin:checked + label {
+            border-color: var(--admin);
+            background: rgba(139,92,246,0.06);
+            box-shadow: 0 0 0 3px rgba(139,92,246,0.12);
+        }
+        #role-admin:checked + label .role-name { color: var(--admin); }
+
+        .role-section-label {
+            font-size: 13px; font-weight: 500;
+            color: var(--ink); margin-bottom: 10px;
+        }
+
+        /* Form Grid */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .form-group { margin-bottom: 16px; }
+        label.field-label {
+            display: block;
+            font-size: 13px; font-weight: 500;
+            color: var(--ink); margin-bottom: 6px;
+        }
+        .input-wrap { position: relative; }
+        .input-icon {
+            position: absolute;
+            left: 13px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted); font-size: 15px;
+            pointer-events: none;
+            display: flex;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 10px 13px 10px 38px;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13.5px;
+            color: var(--ink);
+            background: var(--surface);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: #fff;
+        }
+        input.error { border-color: var(--error); }
+        .error-msg {
+            font-size: 11.5px; color: var(--error);
+            margin-top: 4px; display: none;
+        }
+        .error-msg.show { display: block; }
+
+        /* Password strength */
+        .strength-bar {
+            display: flex; gap: 4px;
+            margin-top: 6px;
+        }
+        .strength-seg {
+            flex: 1; height: 3px;
+            border-radius: 2px;
+            background: var(--border);
+            transition: background 0.3s;
+        }
+        .strength-seg.weak   { background: #ef4444; }
+        .strength-seg.medium { background: #f59e0b; }
+        .strength-seg.strong { background: #10b981; }
+
+        .btn-primary {
+            width: 100%;
+            padding: 13px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 15px; font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            margin-top: 4px;
+        }
+        .btn-primary:hover {
+            background: #1448c0;
+            box-shadow: 0 6px 24px rgba(26,86,219,0.28);
+            transform: translateY(-1px);
+        }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+        .btn-loader {
+            display: none;
+            width: 18px; height: 18px;
+            border: 2.5px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .alert {
+            padding: 11px 15px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+        }
+        .alert.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+        .alert.error   { background: #fdecea; color: #c62828; border: 1px solid #ef9a9a; }
+        .alert.show    { display: block; }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--muted);
+        }
+        .login-link a { color: var(--accent); text-decoration: none; font-weight: 500; }
+
+        @media (max-width: 900px) {
+            .hero { display: none; }
+            .auth-panel { width: 100%; padding: 36px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Left Hero Panel -->
+<div class="hero">
+    <div class="grid-dots"></div>
+
+    <div class="hero-logo">
+        <div class="hero-logo-icon">🏙️</div>
+        <span>Civic Smart City</span>
+    </div>
+
+    <div class="hero-content">
+        <div class="hero-tag">Join the Platform</div>
+        <h1 class="hero-title">Your City.<br>Your <span>Voice</span>.</h1>
+        <p class="hero-desc">Choose your role and become part of the smart city ecosystem — from reporting issues to managing civic services.</p>
+    </div>
+
+    <div class="role-cards">
+        <div class="role-card">
+            <div class="role-dot" style="background: var(--citizen)"></div>
+            <div>
+                <div class="role-card-title">Citizen</div>
+                <div class="role-card-desc">Report issues, track progress, engage with services</div>
+            </div>
+        </div>
+        <div class="role-card">
+            <div class="role-dot" style="background: var(--officer)"></div>
+            <div>
+                <div class="role-card-title">Officer</div>
+                <div class="role-card-desc">Manage complaints, coordinate field operations</div>
+            </div>
+        </div>
+        <div class="role-card">
+            <div class="role-dot" style="background: var(--admin)"></div>
+            <div>
+                <div class="role-card-title">Admin</div>
+                <div class="role-card-desc">Full system control, user management, analytics</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Right Signup Panel -->
+<div class="auth-panel">
+    <div class="auth-top">
+        <h2>Create your account</h2>
+        <p>Already registered? <a href="index.html">Sign in here</a></p>
+    </div>
+
+    <div id="alertBox" class="alert"></div>
+
+    <form id="registerForm" novalidate>
+
+        <!-- Role Selector -->
+        <div class="role-section-label">Select your role *</div>
+        <div class="role-selector">
+            <input type="radio" name="role" id="role-citizen" value="CITIZEN" class="role-option" checked>
+            <label for="role-citizen">
+                <span class="role-emoji">👤</span>
+                <span class="role-name">Citizen</span>
+            </label>
+
+            <input type="radio" name="role" id="role-officer" value="OFFICER" class="role-option">
+            <label for="role-officer">
+                <span class="role-emoji">👮</span>
+                <span class="role-name">Officer</span>
+            </label>
+
+            <input type="radio" name="role" id="role-admin" value="ADMIN" class="role-option">
+            <label for="role-admin">
+                <span class="role-emoji">🛡️</span>
+                <span class="role-name">Admin</span>
+            </label>
+        </div>
+
+        <!-- Username & Email -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="field-label" for="username">Username</label>
+                <div class="input-wrap">
+                    <span class="input-icon">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </span>
+                    <input type="text" id="username" placeholder="Username" autocomplete="username">
+                </div>
+                <div class="error-msg" id="usernameErr">Username required.</div>
+            </div>
+            <div class="form-group">
+                <label class="field-label" for="email">Email</label>
+                <div class="input-wrap">
+                    <span class="input-icon">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </span>
+                    <input type="email" id="email" placeholder="you@email.com" autocomplete="email">
+                </div>
+                <div class="error-msg" id="emailErr">Valid email required.</div>
+            </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="form-group">
+            <label class="field-label" for="phone">Phone Number</label>
+            <div class="input-wrap">
+                <span class="input-icon">
+                    <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.44 2 2 0 0 1 3.58 1.25h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.79a16 16 0 0 0 5.5 5.5l1.81-1.82a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                    </svg>
+                </span>
+                <input type="tel" id="phone" placeholder="+91 00000 00000" autocomplete="tel">
+            </div>
+            <div class="error-msg" id="phoneErr">Phone number required.</div>
+        </div>
+
+        <!-- Password & Confirm -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="field-label" for="password">Password</label>
+                <div class="input-wrap">
+                    <span class="input-icon">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </span>
+                    <input type="password" id="password" placeholder="Min. 6 characters" autocomplete="new-password">
+                </div>
+                <div class="strength-bar">
+                    <div class="strength-seg" id="s1"></div>
+                    <div class="strength-seg" id="s2"></div>
+                    <div class="strength-seg" id="s3"></div>
+                    <div class="strength-seg" id="s4"></div>
+                </div>
+                <div class="error-msg" id="passwordErr">Min. 6 characters required.</div>
+            </div>
+            <div class="form-group">
+                <label class="field-label" for="confirmPassword">Confirm</label>
+                <div class="input-wrap">
+                    <span class="input-icon">
+                        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path d="M9 12l2 2 4-4"/><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </span>
+                    <input type="password" id="confirmPassword" placeholder="Repeat password" autocomplete="new-password">
+                </div>
+                <div class="error-msg" id="confirmErr">Passwords do not match.</div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="registerBtn">
+            <span id="btnText">Create Account</span>
+            <div class="btn-loader" id="btnLoader"></div>
+        </button>
+    </form>
+
+    <div class="login-link">
+        Already have an account? <a href="index.html">Sign in →</a>
+    </div>
+</div>
+
+<script>
+    // Password strength
+    document.getElementById('password').addEventListener('input', function() {
+        const v = this.value;
+        const segs = [document.getElementById('s1'), document.getElementById('s2'),
+                      document.getElementById('s3'), document.getElementById('s4')];
+        segs.forEach(s => s.className = 'strength-seg');
+
+        let score = 0;
+        if (v.length >= 6) score++;
+        if (v.length >= 10) score++;
+        if (/[A-Z]/.test(v) && /[0-9]/.test(v)) score++;
+        if (/[^A-Za-z0-9]/.test(v)) score++;
+
+        const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+        for (let i = 0; i < score; i++) segs[i].classList.add(cls);
+    });
+
+    function showAlert(message, type) {
+        const box = document.getElementById('alertBox');
+        box.textContent = message;
+        box.className = `alert ${type} show`;
+    }
+
+    function setLoading(loading) {
+        const btn = document.getElementById('registerBtn');
+        document.getElementById('btnText').style.display = loading ? 'none' : 'block';
+        document.getElementById('btnLoader').style.display = loading ? 'block' : 'none';
+        btn.disabled = loading;
+    }
+
+    function clearErrors() {
+        document.querySelectorAll('.error-msg').forEach(e => e.classList.remove('show'));
+        document.querySelectorAll('input').forEach(i => i.classList.remove('error'));
+    }
+
+    function showError(fieldId, errId) {
+        document.getElementById(fieldId).classList.add('error');
+        document.getElementById(errId).classList.add('show');
+    }
+
+    function validate() {
+        clearErrors();
+        let valid = true;
+        const u = document.getElementById('username').value.trim();
+        const e = document.getElementById('email').value.trim();
+        const ph = document.getElementById('phone').value.trim();
+        const p = document.getElementById('password').value;
+        const cp = document.getElementById('confirmPassword').value;
+
+        if (!u) { showError('username', 'usernameErr'); valid = false; }
+        if (!e || !/\S+@\S+\.\S+/.test(e)) { showError('email', 'emailErr'); valid = false; }
+        if (!ph) { showError('phone', 'phoneErr'); valid = false; }
+        if (p.length < 6) { showError('password', 'passwordErr'); valid = false; }
+        if (p !== cp) { showError('confirmPassword', 'confirmErr'); valid = false; }
+        return valid;
+    }
+
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        if (!validate()) return;
+
+        setLoading(true);
+        const role = document.querySelector('input[name="role"]:checked').value;
+        const data = {
+            username: document.getElementById('username').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            password: document.getElementById('password').value,
+            role: role
+        };
+
+        try {
+            const res = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await res.json();
+
+            if (res.ok) {
+                showAlert('Account created! Redirecting to login…', 'success');
+                setTimeout(() => window.location.href = 'index.html', 1400);
+            } else {
+                showAlert(result.error || 'Registration failed. Please try again.', 'error');
+            }
+        } catch (err) {
+    showAlert('Error: ' + err.message, 'error');
+    console.error('Full error:', err);
+} finally {
+            setLoading(false);
+        }
+    });
+</script>
+</body>
+</html>

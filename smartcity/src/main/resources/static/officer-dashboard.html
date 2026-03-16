@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CivicPulse – Officer Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:          #080c14;
+      --surface:     #111827;
+      --surface2:    #162033;
+      --panel:       #131d2e;
+      --border:      rgba(255,255,255,0.07);
+      --border2:     rgba(26,86,219,0.28);
+      --blue:        #1a56db;
+      --blue-mid:    rgba(26,86,219,0.5);
+      --blue-glow:   rgba(26,86,219,0.18);
+      --blue-soft:   rgba(26,86,219,0.1);
+      --blue-bright: #3b7ff5;
+      --text:        #e8edf5;
+      --text-soft:   #8895aa;
+      --text-dim:    #4e5a6e;
+      --green:       #10b981;
+      --amber:       #f59e0b;
+      --red:         #ef4444;
+      --sidebar-w:   260px;
+      --radius:      14px;
+      --role:        #10b981;
+      --role-soft:   rgba(16,185,129,0.08);
+    }
+    html, body { height: 100%; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); overflow: hidden; }
+    .app { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w); min-width: var(--sidebar-w); height: 100vh;
+      background: var(--surface); border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0; position: relative;
+    }
+    .sidebar::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 180px;
+      background: linear-gradient(180deg, rgba(16,185,129,0.12) 0%, transparent 100%); pointer-events: none;
+    }
+    .sidebar-logo {
+      padding: 22px 20px 18px; display: flex; align-items: center; gap: 11px;
+      border-bottom: 1px solid var(--border); position: relative; z-index: 1; flex-shrink: 0;
+    }
+    .logo-icon {
+      width: 36px; height: 36px; background: var(--blue); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      box-shadow: 0 0 20px rgba(26,86,219,0.4);
+    }
+    .logo-icon svg { width: 18px; height: 18px; fill: white; }
+    .logo-text { font-weight: 800; font-size: 1.15rem; color: var(--text); letter-spacing: -0.3px; }
+    .logo-text span { color: var(--blue-bright); }
+    .sidebar-role {
+      margin: 14px 14px 4px; padding: 12px 14px; border-radius: var(--radius);
+      background: var(--role-soft); border: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 10px; position: relative; z-index: 1; flex-shrink: 0;
+    }
+    .role-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--role); flex-shrink: 0; animation: pulse-dot 2s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{box-shadow:0 0 6px var(--role)} 50%{box-shadow:0 0 14px var(--role)} }
+    .role-name { font-weight: 700; font-size: 0.78rem; color: var(--role); text-transform: uppercase; letter-spacing: 0.1em; }
+    .role-user { font-size: 0.72rem; color: var(--text-soft); margin-top: 1px; font-family: 'JetBrains Mono', monospace; }
+    .nav-section { padding: 16px 12px 4px; position: relative; z-index: 1; }
+    .nav-label { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim); padding: 0 8px; margin-bottom: 6px; font-weight: 600; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 10px;
+      cursor: pointer; text-decoration: none; color: var(--text-soft); font-size: 0.875rem; font-weight: 500;
+      transition: background 0.15s, color 0.15s; margin-bottom: 2px; position: relative; border: 1px solid transparent;
+    }
+    .nav-item svg { width: 17px; height: 17px; flex-shrink: 0; opacity: 0.7; }
+    .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .nav-item:hover svg { opacity: 1; }
+    .nav-item.active { background: rgba(16,185,129,0.1); color: #34d399; border-color: rgba(16,185,129,0.25); }
+    .nav-item.active svg { opacity: 1; }
+    .nav-item.active::before {
+      content: ''; position: absolute; left: 0; top: 20%; bottom: 20%;
+      width: 3px; border-radius: 0 3px 3px 0; background: #34d399; box-shadow: 0 0 8px rgba(16,185,129,0.5);
+    }
+    .nav-badge { margin-left: auto; background: var(--blue); color: white; font-size: 0.68rem; font-weight: 700; padding: 1px 7px; border-radius: 20px; font-family: 'JetBrains Mono', monospace; }
+    .nav-badge.green { background: var(--green); }
+    .nav-badge.amber { background: var(--amber); }
+    .sidebar-footer { margin-top: auto; padding: 14px; border-top: 1px solid var(--border); flex-shrink: 0; }
+    .logout-btn {
+      width: 100%; padding: 10px 14px; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.18);
+      border-radius: 10px; color: #f87171; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600;
+      cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 8px; justify-content: center;
+    }
+    .logout-btn:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.35); }
+
+    /* MAIN */
+    .main { flex: 1; min-width: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+    .topbar {
+      background: rgba(13,19,32,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border);
+      padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .topbar-left h1 { font-weight: 700; font-size: 1.15rem; color: var(--text); letter-spacing: -0.3px; }
+    .topbar-left p  { font-size: 0.75rem; color: var(--text-soft); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .topbar-chip { padding: 5px 14px; border-radius: 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); color: #34d399; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+    .avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #059669); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; box-shadow: 0 0 12px rgba(16,185,129,0.3); }
+    .content-area { flex: 1; overflow-y: auto; padding: 28px 32px; }
+
+    /* CARDS & PANELS */
+    .page-header { margin-bottom: 24px; animation: fadeUp 0.4s ease both; }
+    .page-header h2 { font-weight: 800; font-size: 1.3rem; color: var(--text); letter-spacing: -0.4px; }
+    .page-header p { font-size: 0.85rem; color: var(--text-soft); margin-top: 4px; }
+
+    .welcome-banner {
+      border-radius: 18px; padding: 28px 32px; margin-bottom: 22px; position: relative; overflow: hidden;
+      background: linear-gradient(120deg, #0d2218 0%, #0a1f16 100%); border: 1px solid rgba(16,185,129,0.25);
+      display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.5s ease both;
+    }
+    .welcome-banner::before { content: ''; position: absolute; top: -60px; right: -40px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(16,185,129,0.18) 0%, transparent 70%); }
+    .welcome-text { position: relative; z-index: 1; }
+    .welcome-title { font-weight: 800; font-size: 1.45rem; color: var(--text); letter-spacing: -0.5px; margin-bottom: 6px; }
+    .welcome-title span { color: #34d399; }
+    .welcome-sub { font-size: 0.875rem; color: var(--text-soft); line-height: 1.6; max-width: 400px; }
+    .welcome-emoji { font-size: 3rem; position: relative; z-index: 1; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+    .stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 22px; }
+    .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; animation: fadeUp 0.5s ease both; cursor: default; }
+    .stat-card:nth-child(1){animation-delay:0.05s} .stat-card:nth-child(2){animation-delay:0.10s}
+    .stat-card:nth-child(3){animation-delay:0.15s} .stat-card:nth-child(4){animation-delay:0.20s}
+    .stat-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, rgba(16,185,129,0.5), transparent); opacity: 0; transition: opacity 0.2s; }
+    .stat-card:hover { border-color: rgba(16,185,129,0.25); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+    .stat-card:hover::after { opacity: 1; }
+    .stat-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; }
+    .stat-icon { width: 40px; height: 40px; border-radius: 10px; font-size: 1.2rem; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); display: flex; align-items: center; justify-content: center; }
+    .stat-trend { font-size: 0.7rem; font-weight: 700; color: var(--green); background: rgba(16,185,129,0.1); padding: 3px 8px; border-radius: 20px; border: 1px solid rgba(16,185,129,0.18); font-family: 'JetBrains Mono', monospace; }
+    .stat-trend.amber { color: var(--amber); background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.2); }
+    .stat-trend.blue { color: var(--blue-bright); background: var(--blue-soft); border-color: var(--border2); }
+    .stat-num { font-weight: 800; font-size: 2rem; letter-spacing: -1.5px; color: var(--text); line-height: 1; }
+    .stat-label { font-size: 0.78rem; color: var(--text-soft); margin-top: 4px; font-weight: 500; }
+
+    .divider { height: 1px; background: var(--border); margin-bottom: 22px; position: relative; }
+    .divider::after { content: ''; position: absolute; left: 0; top: 0; width: 60px; height: 1px; background: rgba(16,185,129,0.5); }
+
+    .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; animation: fadeUp 0.5s ease 0.25s both; }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .card-title { font-weight: 700; font-size: 0.95rem; color: var(--text); }
+    .card-action { font-size: 0.78rem; color: #34d399; cursor: pointer; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); transition: background 0.15s; }
+    .card-action:hover { background: rgba(16,185,129,0.15); }
+
+    /* TASK ITEMS */
+    .t-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); transition: all 0.15s; cursor: default; }
+    .t-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .t-item:hover { padding-left: 8px; padding-right: 8px; margin: 0 -8px; border-radius: 10px; background: rgba(255,255,255,0.03); border-bottom-color: transparent; }
+    .t-icon { width: 38px; height: 38px; border-radius: 10px; font-size: 1.1rem; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .t-info { flex: 1; min-width: 0; }
+    .t-title { font-weight: 600; font-size: 0.85rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .t-meta { font-size: 0.72rem; color: var(--text-soft); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+    .g-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.04em; font-family: 'JetBrains Mono', monospace; }
+    .badge-pending  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+    .badge-progress { background: rgba(26,86,219,0.12);  color: var(--blue-bright); border: 1px solid var(--border2); }
+    .badge-resolved { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+    .badge-new      { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.2); }
+
+    /* QUICK ACTIONS */
+    .quick-actions { display: flex; flex-direction: column; gap: 8px; }
+    .action-btn { width: 100%; padding: 13px 14px; border: 1px solid var(--border); border-radius: 11px; background: transparent; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 12px; transition: all 0.15s; font-family: 'Outfit', sans-serif; }
+    .action-btn:hover { background: rgba(16,185,129,0.08); border-color: rgba(16,185,129,0.25); transform: translateX(4px); }
+    .action-icon { font-size: 1.3rem; }
+    .action-title { font-weight: 600; font-size: 0.85rem; color: var(--text); display: block; }
+    .action-sub   { font-size: 0.72rem; color: var(--text-soft); margin-top: 1px; display: block; }
+    .action-arrow { margin-left: auto; color: var(--text-dim); transition: color 0.15s, transform 0.15s; }
+    .action-btn:hover .action-arrow { color: #34d399; transform: translateX(3px); }
+
+    /* PERFORMANCE CARD */
+    .perf-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; animation: fadeUp 0.5s ease 0.3s both; margin-top: 16px; }
+    .perf-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 16px; }
+    .perf-item { text-align: center; padding: 16px 10px; background: var(--surface2); border-radius: 12px; border: 1px solid var(--border); }
+    .perf-circle { width: 60px; height: 60px; margin: 0 auto 10px; position: relative; }
+    .perf-circle svg { transform: rotate(-90deg); }
+    .perf-circle svg circle { fill: none; stroke-width: 5; }
+    .perf-circle svg .track { stroke: rgba(255,255,255,0.06); }
+    .perf-circle svg .fill  { stroke: #34d399; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
+    .perf-circle svg .fill.amber { stroke: #fbbf24; }
+    .perf-circle svg .fill.blue  { stroke: var(--blue-bright); }
+    .perf-circle-val { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 0.75rem; font-weight: 800; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+    .perf-label { font-size: 0.72rem; color: var(--text-soft); font-weight: 600; }
+
+    /* RECENT ACTIVITY TIMELINE */
+    .activity-list { display: flex; flex-direction: column; gap: 0; }
+    .activity-item { display: flex; gap: 14px; padding: 12px 0; position: relative; }
+    .activity-item:not(:last-child)::before { content: ''; position: absolute; left: 15px; top: 40px; bottom: -2px; width: 1px; background: var(--border); }
+    .activity-dot { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; border: 1px solid; }
+    .activity-dot.green { background: rgba(16,185,129,0.12); border-color: rgba(16,185,129,0.3); }
+    .activity-dot.blue  { background: var(--blue-soft); border-color: var(--border2); }
+    .activity-dot.amber { background: rgba(245,158,11,0.12); border-color: rgba(245,158,11,0.25); }
+    .activity-body { flex: 1; min-width: 0; }
+    .activity-title { font-size: 0.83rem; font-weight: 600; color: var(--text); }
+    .activity-desc { font-size: 0.75rem; color: var(--text-soft); margin-top: 2px; line-height: 1.4; }
+    .activity-time { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
+
+    /* ASSIGNED TASKS PAGE */
+    .task-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .task-sum-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .task-sum-chip { padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; border: 1px solid; cursor: pointer; transition: all 0.15s; }
+    .task-sum-chip.all      { background: rgba(255,255,255,0.04); color: var(--text-soft); border-color: var(--border); }
+    .task-sum-chip.new-task { background: rgba(245,158,11,0.08); color: #fbbf24; border-color: rgba(245,158,11,0.2); }
+    .task-sum-chip.accepted { background: var(--blue-soft); color: var(--blue-bright); border-color: var(--border2); }
+    .task-sum-chip.progress { background: rgba(16,185,129,0.08); color: #34d399; border-color: rgba(16,185,129,0.2); }
+    .task-sum-chip.resolved { background: rgba(99,102,241,0.08); color: #a5b4fc; border-color: rgba(99,102,241,0.2); }
+    .mg-search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .mg-search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--text-dim); pointer-events: none; }
+    .mg-search { width: 100%; padding: 9px 12px 9px 36px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.875rem; outline: none; transition: border-color 0.2s; }
+    .mg-search:focus { border-color: rgba(16,185,129,0.4); }
+    .mg-search::placeholder { color: var(--text-dim); }
+    .mg-filter-select { padding: 9px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--text-soft); font-family: 'Outfit', sans-serif; font-size: 0.825rem; outline: none; cursor: pointer; transition: border-color 0.2s; appearance: none; padding-right: 30px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238895aa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+    .mg-filter-select option { background: #1a2540; }
+
+    .task-list { display: flex; flex-direction: column; gap: 10px; }
+    .task-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+    .task-card:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .task-card.new-task-card  { border-left: 3px solid #fbbf24; }
+    .task-card.accepted-card  { border-left: 3px solid var(--blue-bright); }
+    .task-card.inprog-card    { border-left: 3px solid #34d399; }
+    .task-card.resolved-card  { border-left: 3px solid #a5b4fc; }
+    .task-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; user-select: none; }
+    .task-cat-icon { width: 40px; height: 40px; border-radius: 10px; font-size: 1.15rem; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .task-info { flex: 1; min-width: 0; }
+    .task-title { font-weight: 600; font-size: 0.875rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .task-meta-row { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+    .task-meta { font-size: 0.72rem; color: var(--text-soft); font-family: 'JetBrains Mono', monospace; }
+    .task-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
+    .task-deadline { font-size: 0.7rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 20px; }
+    .deadline-today    { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+    .deadline-tomorrow { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+    .deadline-soon     { background: var(--blue-soft); color: var(--blue-bright); border: 1px solid var(--border2); }
+    .deadline-ok       { background: rgba(16,185,129,0.08); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+    .task-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .task-chevron { color: var(--text-dim); font-size: 0.8rem; transition: transform 0.2s; }
+    .task-card.expanded .task-chevron { transform: rotate(180deg); }
+    .task-detail { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); animation: fadeUp 0.2s ease both; }
+    .task-card.expanded .task-detail { display: block; }
+    .task-detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
+    .task-detail-item { display: flex; flex-direction: column; gap: 3px; }
+    .task-detail-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600; }
+    .task-detail-value { font-size: 0.83rem; color: var(--text); font-weight: 500; }
+    .task-desc-box { font-size: 0.83rem; color: var(--text-soft); line-height: 1.6; padding: 10px 14px; background: var(--surface2); border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); }
+    .task-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
+    /* PROGRESS NOTE AREA */
+    .progress-note-area { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; padding: 14px; background: var(--surface2); border-radius: 10px; border: 1px solid var(--border); }
+    .progress-note-label { font-size: 0.75rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+    .progress-note-input { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.83rem; outline: none; resize: vertical; min-height: 72px; transition: border-color 0.2s; width: 100%; }
+    .progress-note-input:focus { border-color: rgba(16,185,129,0.4); }
+    .progress-note-input::placeholder { color: var(--text-dim); }
+    .progress-photo-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .progress-photo-btn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px dashed rgba(16,185,129,0.4); border-radius: 8px; background: transparent; color: #34d399; font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s; position: relative; }
+    .progress-photo-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .progress-photo-btn:hover { background: rgba(16,185,129,0.08); }
+    .progress-photo-thumbs { display: flex; gap: 6px; flex-wrap: wrap; }
+    .progress-thumb { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(16,185,129,0.3); }
+    .note-history { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .note-entry { padding: 8px 12px; background: var(--panel); border-radius: 8px; border-left: 3px solid rgba(16,185,129,0.5); }
+    .note-entry-text { font-size: 0.82rem; color: var(--text); }
+    .note-entry-meta { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
+
+    /* BUTTONS */
+    .btn-secondary { padding: 10px 22px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    .btn-secondary:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+    .btn-primary { padding: 10px 28px; border-radius: 10px; border: none; background: var(--blue); color: white; font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(26,86,219,0.3); }
+    .btn-primary:hover { background: var(--blue-bright); transform: translateY(-1px); }
+    .btn-primary svg { width: 16px; height: 16px; }
+    .btn-accept { padding: 9px 20px; border-radius: 10px; border: 1px solid rgba(16,185,129,0.35); background: rgba(16,185,129,0.1); color: #34d399; font-family: 'Outfit', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+    .btn-accept:hover { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.55); }
+    .btn-resolve { padding: 9px 20px; border-radius: 10px; border: none; background: var(--green); color: white; font-family: 'Outfit', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; box-shadow: 0 3px 12px rgba(16,185,129,0.3); }
+    .btn-resolve:hover { background: #0ea674; transform: translateY(-1px); }
+    .btn-resolve svg, .btn-accept svg { width: 14px; height: 14px; }
+    .btn-danger { padding: 8px 18px; border-radius: 9px; border: 1px solid rgba(239,68,68,0.3); background: rgba(239,68,68,0.08); color: #f87171; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+    .btn-danger:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.5); }
+    .btn-danger svg { width: 14px; height: 14px; }
+
+    /* COMPLETED STATS */
+    .completed-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
+    .c-stat { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; text-align: center; animation: fadeUp 0.4s ease both; }
+    .c-stat-num { font-weight: 800; font-size: 1.8rem; letter-spacing: -1px; color: var(--text); }
+    .c-stat-label { font-size: 0.75rem; color: var(--text-soft); margin-top: 4px; font-family: 'JetBrains Mono', monospace; }
+    .c-stat-icon { font-size: 1.5rem; margin-bottom: 6px; }
+
+    /* PROFILE */
+    .profile-layout { display: grid; grid-template-columns: 300px 1fr; gap: 20px; align-items: start; }
+    .profile-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 24px; text-align: center; animation: fadeUp 0.4s ease 0.05s both; }
+    .profile-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--green), #059669); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800; color: white; box-shadow: 0 0 28px rgba(16,185,129,0.4); margin: 0 auto 6px; position: relative; }
+    .profile-avatar-badge { width: 22px; height: 22px; border-radius: 50%; background: var(--green); border: 2px solid var(--panel); display: flex; align-items: center; justify-content: center; position: absolute; bottom: 2px; right: 2px; }
+    .profile-avatar-badge svg { width: 10px; height: 10px; fill: white; }
+    .profile-avatar-wrap { position: relative; display: inline-block; margin-bottom: 10px; }
+    .profile-name { font-weight: 800; font-size: 1.1rem; color: var(--text); margin-bottom: 6px; }
+    .profile-role-badge { display: inline-block; padding: 3px 12px; border-radius: 20px; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); color: #34d399; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 20px; }
+    .profile-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+    .profile-stat { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px 8px; }
+    .profile-stat-num { font-weight: 800; font-size: 1.3rem; color: var(--text); }
+    .profile-stat-lbl { font-size: 0.65rem; color: var(--text-soft); margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+    .profile-joined { font-size: 0.72rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    .profile-right { display: flex; flex-direction: column; gap: 16px; }
+    .profile-section { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; animation: fadeUp 0.4s ease both; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .section-title { font-weight: 700; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .edit-toggle { font-size: 0.78rem; color: var(--blue-bright); cursor: pointer; font-weight: 600; padding: 4px 12px; border-radius: 6px; background: var(--blue-soft); border: 1px solid var(--border2); transition: background 0.15s; font-family: 'Outfit', sans-serif; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .info-row { display: flex; flex-direction: column; gap: 4px; }
+    .info-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600; }
+    .info-value { font-size: 0.875rem; color: var(--text); font-weight: 500; }
+    .info-value.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-soft); }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label { font-size: 0.78rem; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.08em; }
+    .form-input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; width: 100%; }
+    .form-input:focus { border-color: rgba(16,185,129,0.4); box-shadow: 0 0 0 3px rgba(16,185,129,0.08); }
+    .form-input::placeholder { color: var(--text-dim); }
+    .pwd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pwd-grid .form-group:first-child { grid-column: 1 / -1; }
+    .history-table { width: 100%; border-collapse: collapse; }
+    .history-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600; text-align: left; padding: 0 12px 10px; border-bottom: 1px solid var(--border); }
+    .history-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); font-size: 0.83rem; color: var(--text-soft); vertical-align: middle; }
+    .history-table tr:last-child td { border-bottom: none; }
+    .history-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .history-table td:first-child { color: var(--text); font-weight: 500; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 500; display: flex; align-items: center; justify-content: center; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal-box { background: var(--surface); border: 1px solid rgba(16,185,129,0.25); border-radius: 18px; padding: 28px; max-width: 420px; width: 90%; animation: fadeUp 0.25s ease; }
+    .modal-title { font-weight: 800; font-size: 1.05rem; color: var(--text); margin-bottom: 10px; }
+    .modal-body  { font-size: 0.875rem; color: var(--text-soft); line-height: 1.6; margin-bottom: 22px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+    /* COMING SOON */
+    .coming-soon { text-align: center; padding: 80px 32px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); animation: fadeUp 0.4s ease both; }
+    .coming-soon .cs-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .coming-soon h2 { font-weight: 800; font-size: 1.3rem; color: var(--text); margin-bottom: 8px; }
+    .coming-soon p { color: var(--text-soft); font-size: 0.875rem; }
+    .mg-empty { text-align: center; padding: 60px 24px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text-soft); }
+    .mg-empty .me-icon { font-size: 2.5rem; margin-bottom: 10px; }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid rgba(16,185,129,0.3); color: var(--text); padding: 12px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: 500; transform: translateY(70px); opacity: 0; transition: all 0.3s cubic-bezier(0.22,1,0.36,1); z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 10px; pointer-events: none; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3); border-radius: 10px; }
+    @media (max-width: 1100px) { .stats-grid{grid-template-columns:repeat(2,1fr)} .profile-layout{grid-template-columns:1fr} }
+    @media (max-width: 900px)  { .content-grid{grid-template-columns:1fr} .form-grid{grid-template-columns:1fr} .info-grid{grid-template-columns:1fr} }
+    @media (max-width: 640px)  { .sidebar{display:none} .content-area{padding:16px} .topbar{padding:0 16px} }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+      <span class="logo-text">Civic<span>Pulse</span></span>
+    </div>
+    <div class="sidebar-role">
+      <div class="role-dot"></div>
+      <div>
+        <div class="role-name">Officer</div>
+        <div class="role-user">@officer_ramesh</div>
+      </div>
+    </div>
+    <div id="navItems"></div>
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="logout()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id="topbarTitle">Officer Dashboard</h1>
+        <p id="topbarDate"></p>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-chip">Officer</div>
+        <div class="avatar">R</div>
+      </div>
+    </div>
+    <div class="content-area" id="dashboardContent"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const officerUser = { username: 'officer_ramesh', role: 'OFFICER', department: 'Public Works', employeeId: 'EMP-2041' };
+
+document.getElementById('topbarDate').textContent =
+  new Date().toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+const NAV_ITEMS = [
+  { section:'Work', items:[
+    { id:'overview',   label:'Overview',        icon:'🏠', badge:null },
+    { id:'assigned',   label:'Assigned Tasks',  icon:'📋', badge:'5' },
+    { id:'inprogress', label:'In Progress',     icon:'🔧', badge:'2' },
+    { id:'completed',  label:'Completed',       icon:'✅', badge:null },
+  ]},
+  { section:'Info', items:[
+    { id:'profile',       label:'My Profile',    icon:'👤', badge:null },
+    { id:'notifications', label:'Notifications', icon:'🔔', badge:'3' },
+  ]},
+];
+
+let activeNav = 'overview';
+
+function buildNav() {
+  let html = '';
+  for (const sec of NAV_ITEMS) {
+    html += `<div class="nav-section"><div class="nav-label">${sec.section}</div>`;
+    for (const item of sec.items) {
+      html += `<a class="nav-item ${item.id===activeNav?'active':''}" onclick="navigateTo('${item.id}')" href="#">
+        <span>${item.icon}</span> ${item.label}
+        ${item.badge?`<span class="nav-badge">${item.badge}</span>`:''}
+      </a>`;
+    }
+    html += '</div>';
+  }
+  document.getElementById('navItems').innerHTML = html;
+}
+
+function navigateTo(id) {
+  activeNav = id;
+  buildNav();
+  renderContent(id);
+  const label = NAV_ITEMS.flatMap(s=>s.items).find(i=>i.id===id)?.label || 'Dashboard';
+  document.getElementById('topbarTitle').textContent = label;
+  document.getElementById('dashboardContent').scrollTop = 0;
+}
+
+/* ────── TASK DATA ────── */
+let _tasks = [
+  { id:'TSK-001', icon:'💡', title:'Street light repair – MG Road Jn.', category:'Electricity', location:'MG Road Junction 2', priority:'HIGH', deadline:'Today', assignedBy:'Admin Priya', assignedDate:'08 Mar 2026', status:'New', citizen:'rahul_k', desc:'Three street lights at MG Road Junction are non-functional for 2 weeks. Safety hazard at night. Citizen has reported repeated failures.', notes:[] },
+  { id:'TSK-002', icon:'💧', title:'Drain blockage – Patel Nagar', category:'Drainage', location:'Patel Nagar, Street 3', priority:'HIGH', deadline:'Tomorrow', assignedBy:'Admin Priya', assignedDate:'07 Mar 2026', status:'In Progress', citizen:'suresh_v', desc:'Main drainage pipe is blocked causing overflow onto the road. Multiple households affected. Needs immediate clearing.', notes:['Team dispatched. Equipment at site.'] },
+  { id:'TSK-003', icon:'🛣️', title:'Road repair – Industrial Zone Gate 3', category:'Roads', location:'Industrial Zone, Gate 3', priority:'MEDIUM', deadline:'13 Mar 2026', assignedBy:'Admin Raj', assignedDate:'06 Mar 2026', status:'New', citizen:'priya_m', desc:'Large potholes near industrial zone gate. Heavy vehicles causing further damage. Requires patching and resurfacing.', notes:[] },
+  { id:'TSK-004', icon:'🗑️', title:'Garbage pile – Sector 7 market', category:'Sanitation', location:'Sector 7, Market Area', priority:'MEDIUM', deadline:'12 Mar 2026', assignedBy:'Admin Raj', assignedDate:'05 Mar 2026', status:'Accepted', citizen:'meena_r', desc:'Uncollected garbage pile near vegetable market. Health risk to vendors and customers. Needs immediate collection and bin placement.', notes:[] },
+  { id:'TSK-005', icon:'🌳', title:'Fallen tree – Park Road', category:'Parks', location:'Park Road, Sector 2', priority:'LOW', deadline:'15 Mar 2026', assignedBy:'Admin Priya', assignedDate:'04 Mar 2026', status:'In Progress', citizen:'john_d', desc:'A large tree branch has fallen on the footpath making it impassable. Residents using road instead, causing traffic issues.', notes:['Branch partially cleared. Full removal scheduled.'] },
+  { id:'TSK-006', icon:'💧', title:'Water meter repair – Block B', category:'Water Supply', location:'Block B, Ward 5', priority:'HIGH', deadline:'01 Mar 2026', assignedBy:'Admin Priya', assignedDate:'27 Feb 2026', status:'Resolved', citizen:'kumar_v', desc:'Leaking water meter wasting significant water. Fixed and meter replaced.', notes:['Inspected. Meter replaced on 01 Mar 2026.'], resolvedDate:'01 Mar 2026' },
+  { id:'TSK-007', icon:'💡', title:'Transformer repair – Substation 3', category:'Electricity', location:'Substation 3, Zone A', priority:'HIGH', deadline:'28 Feb 2026', assignedBy:'Admin Raj', assignedDate:'25 Feb 2026', status:'Resolved', citizen:'ravi_p', desc:'Power transformer failure causing outage in Zone A. Resolved with replacement unit.', notes:['Replacement unit installed. Power restored.'], resolvedDate:'28 Feb 2026' },
+  { id:'TSK-008', icon:'🛣️', title:'Pothole repair – Nehru Street', category:'Roads', location:'Nehru Street, Block C', priority:'MEDIUM', deadline:'25 Feb 2026', assignedBy:'Admin Priya', assignedDate:'22 Feb 2026', status:'Resolved', citizen:'latha_k', desc:'Multiple potholes along Nehru Street. Patching completed.', notes:['Road patched. Surface sealed.'], resolvedDate:'25 Feb 2026' },
+];
+
+let _notifs = [
+  { id:1, type:'assign', read:false, icon:'📋', title:'New task assigned', desc:'TSK-001: Street light repair at MG Road Junction. Priority: HIGH. Deadline: Today.', time:'1 hr ago', category:'assign' },
+  { id:2, type:'system', read:false, icon:'⚠️', title:'SLA Warning', desc:'TSK-003 deadline is approaching in 2 days. Please update the status.', time:'3 hrs ago', category:'system' },
+  { id:3, type:'status', read:false, icon:'💬', title:'Admin comment on TSK-002', desc:'Admin Priya added a note: "Please expedite. Resident has escalated complaint."', time:'1 day ago', category:'status' },
+  { id:4, type:'system', read:true, icon:'🎉', title:'Monthly performance report ready', desc:'Your March 2026 performance report has been generated. SLA score: 96%.', time:'2 days ago', category:'system' },
+];
+
+const priorityColor = p => p==='HIGH'?'#f87171':p==='MEDIUM'?'#fbbf24':'#34d399';
+const badgeClass    = s => s==='New'?'badge-new':s==='Accepted'||s==='In Progress'?'badge-progress':'badge-resolved';
+const deadlineClass = d => d==='Today'?'deadline-today':d==='Tomorrow'?'deadline-tomorrow':'deadline-ok';
+
+/* ────── RENDER ROUTER ────── */
+function renderContent(id) {
+  const el = document.getElementById('dashboardContent');
+  if      (id==='overview')     el.innerHTML = renderOverview();
+  else if (id==='assigned')     { el.innerHTML = renderAssigned(); initAssigned(); }
+  else if (id==='inprogress')   { el.innerHTML = renderInProgress(); initInProgress(); }
+  else if (id==='completed')    el.innerHTML = renderCompleted();
+  else if (id==='profile')      el.innerHTML = renderProfile();
+  else if (id==='notifications'){ el.innerHTML = renderNotifications(); initNotifications(); }
+  else el.innerHTML = `<div class="coming-soon"><div class="cs-icon">🚧</div><h2>Coming Soon</h2><p>This section will be available shortly.</p></div>`;
+}
+
+/* ────── OVERVIEW ────── */
+function renderOverview() {
+  const assigned   = _tasks.filter(t=>t.status==='New'||t.status==='Accepted').length;
+  const inprog     = _tasks.filter(t=>t.status==='In Progress').length;
+  const resolved   = _tasks.filter(t=>t.status==='Resolved').length;
+  const highUrgent = _tasks.filter(t=>t.priority==='HIGH'&&t.status!=='Resolved').length;
+
+  return `
+    <div class="welcome-banner">
+      <div class="welcome-text">
+        <div class="welcome-title">Ready to serve, <span>${officerUser.username}</span> 👷</div>
+        <div class="welcome-sub">You have ${assigned} assigned tasks and ${inprog} currently in progress. Keep up the great work!</div>
+      </div>
+      <div class="welcome-emoji">🔧</div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-header"><div class="stat-icon">📋</div><span class="stat-trend amber">${assigned} pending</span></div><div class="stat-num">${assigned}</div><div class="stat-label">Assigned Tasks</div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-icon">⚙️</div><span class="stat-trend blue">Active</span></div><div class="stat-num">${inprog}</div><div class="stat-label">In Progress</div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-icon">✅</div><span class="stat-trend">This month</span></div><div class="stat-num">${resolved}</div><div class="stat-label">Completed</div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-icon">🏆</div><span class="stat-trend">Excellent</span></div><div class="stat-num">96%</div><div class="stat-label">SLA Score</div></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="content-grid">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">My Current Tasks</span>
+          <span class="card-action" onclick="navigateTo('assigned')">View all →</span>
+        </div>
+        ${_tasks.filter(t=>t.status!=='Resolved').slice(0,4).map(t=>`
+          <div class="t-item">
+            <div class="t-icon">${t.icon}</div>
+            <div class="t-info">
+              <div class="t-title">${t.title}</div>
+              <div class="t-meta">📍 ${t.location} · ⏰ ${t.deadline}</div>
+            </div>
+            <span class="g-badge ${badgeClass(t.status)}">${t.status}</span>
+          </div>`).join('')}
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Quick Actions</span></div>
+          <div class="quick-actions">
+            <button class="action-btn" onclick="navigateTo('assigned')"><span class="action-icon">📋</span><span><span class="action-title">View Assigned Tasks</span><span class="action-sub">${assigned} tasks awaiting</span></span><span class="action-arrow">→</span></button>
+            <button class="action-btn" onclick="navigateTo('inprogress')"><span class="action-icon">🔧</span><span><span class="action-title">Update In Progress</span><span class="action-sub">${inprog} tasks active</span></span><span class="action-arrow">→</span></button>
+            <button class="action-btn" onclick="navigateTo('completed')"><span class="action-icon">✅</span><span><span class="action-title">View Completed</span><span class="action-sub">${resolved} tasks resolved</span></span><span class="action-arrow">→</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Performance Card -->
+    <div class="perf-card">
+      <div class="card-header">
+        <span class="card-title">📊 Performance Metrics</span>
+        <span class="card-action" onclick="navigateTo('completed')">Full report →</span>
+      </div>
+      <div class="perf-grid">
+        ${[
+          {label:'SLA Compliance', val:96, color:'fill'},
+          {label:'On-Time Rate',   val:88, color:'fill amber'},
+          {label:'Citizen Rating', val:92, color:'fill blue'},
+        ].map(m=>{
+          const r=28, circ=2*Math.PI*r, off=circ-(m.val/100)*circ;
+          return `<div class="perf-item">
+            <div class="perf-circle">
+              <svg viewBox="0 0 70 70" width="60" height="60">
+                <circle class="track" cx="35" cy="35" r="${r}"/>
+                <circle class="${m.color}" cx="35" cy="35" r="${r}" stroke-dasharray="${circ}" stroke-dashoffset="${off}"/>
+              </svg>
+              <div class="perf-circle-val">${m.val}%</div>
+            </div>
+            <div class="perf-label">${m.label}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="card" style="margin-top:16px;animation-delay:0.35s">
+      <div class="card-header"><span class="card-title">Recent Activity</span></div>
+      <div class="activity-list">
+        <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-body"><div class="activity-title">TSK-006 marked as Resolved</div><div class="activity-desc">Water meter repair at Block B completed successfully.</div><div class="activity-time">01 Mar 2026 · 14:30</div></div></div>
+        <div class="activity-item"><div class="activity-dot blue">📋</div><div class="activity-body"><div class="activity-title">TSK-001 assigned to you</div><div class="activity-desc">Street light repair at MG Road Junction. Priority: HIGH.</div><div class="activity-time">08 Mar 2026 · 09:15</div></div></div>
+        <div class="activity-item"><div class="activity-dot amber">🔧</div><div class="activity-body"><div class="activity-title">Progress note saved on TSK-002</div><div class="activity-desc">Team dispatched. Equipment at site.</div><div class="activity-time">07 Mar 2026 · 11:45</div></div></div>
+        <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-body"><div class="activity-title">TSK-007 marked as Resolved</div><div class="activity-desc">Transformer repair at Substation 3 completed.</div><div class="activity-time">28 Feb 2026 · 16:00</div></div></div>
+      </div>
+    </div>`;
+}
+
+/* ────── ASSIGNED ────── */
+function renderAssigned() {
+  return `
+    <div class="page-header">
+      <h2>📋 Assigned Tasks</h2>
+      <p>Tasks assigned to you by admin. Accept them to begin working.</p>
+    </div>
+    <div class="task-sum-bar" id="assignedSumBar"></div>
+    <div class="task-toolbar">
+      <div class="mg-search-wrap" style="flex:1;min-width:200px">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input class="mg-search" id="assignedSearch" type="text" placeholder="Search tasks..." oninput="refreshAssigned()"/>
+      </div>
+      <select class="mg-filter-select" id="assignedPriFilter" onchange="refreshAssigned()">
+        <option value="all">All Priorities</option>
+        <option value="HIGH">🔴 High</option>
+        <option value="MEDIUM">🟡 Medium</option>
+        <option value="LOW">🟢 Low</option>
+      </select>
+    </div>
+    <div class="task-list" id="assignedList"></div>`;
+}
+
+function initAssigned() { refreshAssigned(); }
+
+function refreshAssigned() {
+  const search = (document.getElementById('assignedSearch')?.value||'').toLowerCase();
+  const priF   = document.getElementById('assignedPriFilter')?.value||'all';
+  const bar    = document.getElementById('assignedSumBar');
+  const list   = document.getElementById('assignedList');
+  const tasks  = _tasks.filter(t=>t.status==='New'||t.status==='Accepted');
+  const newC   = tasks.filter(t=>t.status==='New').length;
+  const accC   = tasks.filter(t=>t.status==='Accepted').length;
+
+  bar.innerHTML = `
+    <span class="task-sum-chip all">${tasks.length} Total</span>
+    <span class="task-sum-chip new-task">${newC} New</span>
+    <span class="task-sum-chip accepted">${accC} Accepted</span>`;
+
+  const visible = tasks.filter(t=>{
+    const ms = !search||t.title.toLowerCase().includes(search)||t.category.toLowerCase().includes(search);
+    return ms && (priF==='all'||t.priority===priF);
+  });
+
+  if (!visible.length) { list.innerHTML=`<div class="mg-empty"><div class="me-icon">✅</div><p>No tasks match your filters.</p></div>`; return; }
+
+  list.innerHTML = visible.map(t=>`
+    <div class="task-card ${t.status==='New'?'new-task-card':'accepted-card'}" id="tcard-${t.id}">
+      <div class="task-header" onclick="toggleCard('tcard-${t.id}')">
+        <div class="task-cat-icon">${t.icon}</div>
+        <div class="task-info">
+          <div class="task-title">${t.title}</div>
+          <div class="task-meta-row">
+            <span class="task-meta">${t.id}</span><span class="task-sep"></span>
+            <span class="task-meta">${t.category}</span><span class="task-sep"></span>
+            <span class="task-meta">By ${t.assignedBy}</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <span class="task-deadline ${deadlineClass(t.deadline)}">⏰ ${t.deadline}</span>
+          <span style="font-size:0.7rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
+          <span class="g-badge ${badgeClass(t.status)}">${t.status}</span>
+          <span class="task-chevron">▼</span>
+        </div>
+      </div>
+      <div class="task-detail">
+        <div class="task-detail-grid">
+          <div class="task-detail-item"><div class="task-detail-label">Location</div><div class="task-detail-value">📍 ${t.location}</div></div>
+          <div class="task-detail-item"><div class="task-detail-label">Citizen</div><div class="task-detail-value">👤 @${t.citizen}</div></div>
+          <div class="task-detail-item"><div class="task-detail-label">Assigned On</div><div class="task-detail-value" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem">${t.assignedDate}</div></div>
+        </div>
+        <div class="task-desc-box">${t.desc}</div>
+        <div class="task-actions">
+          ${t.status==='New'?`
+            <button class="btn-accept" onclick="acceptTask('${t.id}')">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              Accept Task
+            </button>` : `
+            <button class="btn-resolve" onclick="startTask('${t.id}')">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              Start Working
+            </button>
+            <span style="font-size:0.78rem;color:var(--green);font-family:'JetBrains Mono',monospace">✓ Accepted</span>`}
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function acceptTask(id) {
+  const t = _tasks.find(t=>t.id===id);
+  if (t) { t.status='Accepted'; refreshAssigned(); showToast(`Task ${id} accepted! ✓`,'success'); }
+}
+
+function startTask(id) {
+  const t = _tasks.find(t=>t.id===id);
+  if (t) { t.status='In Progress'; showToast(`Task ${id} moved to In Progress 🔧`,'info'); navigateTo('inprogress'); }
+}
+
+/* ────── IN PROGRESS ────── */
+function renderInProgress() {
+  return `
+    <div class="page-header">
+      <h2>🔧 In Progress</h2>
+      <p>Add resolution notes, upload photos, and mark tasks as resolved when done.</p>
+    </div>
+    <div class="task-list" id="inprogressList"></div>`;
+}
+
+function initInProgress() { refreshInProgress(); }
+
+function refreshInProgress() {
+  const list  = document.getElementById('inprogressList');
+  const tasks = _tasks.filter(t=>t.status==='In Progress');
+
+  if (!tasks.length) {
+    list.innerHTML = `<div class="mg-empty"><div class="me-icon">🎉</div><p>No tasks in progress right now. Go to Assigned Tasks to start one!</p></div>`;
+    return;
+  }
+
+  list.innerHTML = tasks.map(t=>`
+    <div class="task-card inprog-card" id="icard-${t.id}">
+      <div class="task-header" onclick="toggleCard('icard-${t.id}')">
+        <div class="task-cat-icon">${t.icon}</div>
+        <div class="task-info">
+          <div class="task-title">${t.title}</div>
+          <div class="task-meta-row">
+            <span class="task-meta">${t.id}</span><span class="task-sep"></span>
+            <span class="task-meta">${t.category}</span><span class="task-sep"></span>
+            <span class="task-meta">📍 ${t.location}</span>
+          </div>
+        </div>
+        <div class="task-right">
+          <span class="task-deadline ${deadlineClass(t.deadline)}">⏰ ${t.deadline}</span>
+          <span style="font-size:0.7rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
+          <span class="g-badge badge-progress">In Progress</span>
+          <span class="task-chevron">▼</span>
+        </div>
+      </div>
+      <div class="task-detail">
+        <div class="task-detail-grid">
+          <div class="task-detail-item"><div class="task-detail-label">Citizen</div><div class="task-detail-value">👤 @${t.citizen}</div></div>
+          <div class="task-detail-item"><div class="task-detail-label">Assigned By</div><div class="task-detail-value">${t.assignedBy}</div></div>
+          <div class="task-detail-item"><div class="task-detail-label">Deadline</div><div class="task-detail-value" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem">${t.deadline}</div></div>
+        </div>
+        <div class="task-desc-box">${t.desc}</div>
+        ${t.notes.length?`
+        <div style="margin-bottom:14px">
+          <div style="font-size:0.75rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Progress Notes</div>
+          <div class="note-history">${t.notes.map((n,i)=>`<div class="note-entry"><div class="note-entry-text">${n}</div><div class="note-entry-meta">Note ${i+1}</div></div>`).join('')}</div>
+        </div>`:``}
+        <div class="progress-note-area">
+          <div class="progress-note-label">Add Progress Update</div>
+          <textarea class="progress-note-input" id="note-${t.id}" placeholder="Describe what you've done, what's remaining, any issues encountered..."></textarea>
+          <div class="progress-photo-row">
+            <button class="progress-photo-btn">
+              📷 Attach Photos
+              <input type="file" accept="image/*" multiple onchange="handlePhotos('${t.id}',this)"/>
+            </button>
+            <div class="progress-photo-thumbs" id="thumbs-${t.id}"></div>
+          </div>
+          <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
+            <button class="btn-secondary" onclick="saveNote('${t.id}')">💾 Save Note</button>
+            <button class="btn-resolve" onclick="confirmResolve('${t.id}')">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+              Mark as Resolved
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function handlePhotos(taskId, input) {
+  const thumbs = document.getElementById('thumbs-'+taskId);
+  for (const f of input.files) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.createElement('img'); img.className='progress-thumb'; img.src=e.target.result;
+      thumbs.appendChild(img);
+    };
+    reader.readAsDataURL(f);
+  }
+  input.value='';
+}
+
+function saveNote(taskId) {
+  const el = document.getElementById('note-'+taskId);
+  const text = el?.value.trim();
+  if (!text) { showToast('Please write a note first','error'); return; }
+  const t = _tasks.find(t=>t.id===taskId);
+  if (t) { t.notes.push(text); el.value=''; }
+  refreshInProgress();
+  setTimeout(()=>{ document.getElementById('icard-'+taskId)?.classList.add('expanded'); },50);
+  showToast('Progress note saved ✓','success');
+}
+
+function confirmResolve(taskId) {
+  const t = _tasks.find(t=>t.id===taskId);
+  if (!t) return;
+  showModal('Mark as Resolved',`Confirm that "<strong>${t.title}</strong>" has been fully resolved? The citizen and admin will be notified.`,()=>{
+    t.status='Resolved';
+    t.resolvedDate=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    refreshInProgress();
+    showToast(`Task ${taskId} marked as Resolved! 🎉`,'success');
+    // redirect to feedback page prompt
+    setTimeout(()=>showToast('Citizen feedback will be requested automatically 📧','info'),1500);
+  });
+}
+
+/* ────── COMPLETED ────── */
+function renderCompleted() {
+  const resolved = _tasks.filter(t=>t.status==='Resolved');
+  const highP    = resolved.filter(t=>t.priority==='HIGH').length;
+
+  return `
+    <div class="page-header"><h2>✅ Completed Tasks</h2><p>Your resolution history. Great work keeping the city running!</p></div>
+    <div class="completed-stats">
+      <div class="c-stat" style="animation-delay:0.05s"><div class="c-stat-icon">✅</div><div class="c-stat-num">${resolved.length}</div><div class="c-stat-label">Total Resolved</div></div>
+      <div class="c-stat" style="animation-delay:0.10s"><div class="c-stat-icon">🔴</div><div class="c-stat-num">${highP}</div><div class="c-stat-label">High Priority</div></div>
+      <div class="c-stat" style="animation-delay:0.15s"><div class="c-stat-icon">🏆</div><div class="c-stat-num">96%</div><div class="c-stat-label">SLA Score</div></div>
+    </div>
+    <div class="divider"></div>
+    ${!resolved.length?`<div class="mg-empty"><div class="me-icon">📋</div><p>No completed tasks yet.</p></div>`:`
+    <div class="task-list">
+      ${resolved.map(t=>`
+        <div class="task-card resolved-card" id="ccard-${t.id}">
+          <div class="task-header" onclick="toggleCard('ccard-${t.id}')">
+            <div class="task-cat-icon">${t.icon}</div>
+            <div class="task-info">
+              <div class="task-title">${t.title}</div>
+              <div class="task-meta-row">
+                <span class="task-meta">${t.id}</span><span class="task-sep"></span>
+                <span class="task-meta">${t.category}</span><span class="task-sep"></span>
+                <span class="task-meta" style="color:var(--green)">✓ Resolved ${t.resolvedDate||''}</span>
+              </div>
+            </div>
+            <div class="task-right">
+              <span style="font-size:0.7rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
+              <span class="g-badge badge-resolved">Resolved</span>
+              <span class="task-chevron">▼</span>
+            </div>
+          </div>
+          <div class="task-detail">
+            <div class="task-detail-grid">
+              <div class="task-detail-item"><div class="task-detail-label">Location</div><div class="task-detail-value">📍 ${t.location}</div></div>
+              <div class="task-detail-item"><div class="task-detail-label">Citizen</div><div class="task-detail-value">👤 @${t.citizen}</div></div>
+              <div class="task-detail-item"><div class="task-detail-label">Resolved On</div><div class="task-detail-value" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--green)">${t.resolvedDate||'—'}</div></div>
+            </div>
+            <div class="task-desc-box">${t.desc}</div>
+            ${t.notes.length?`<div class="note-history">${t.notes.map((n,i)=>`<div class="note-entry"><div class="note-entry-text">${n}</div><div class="note-entry-meta">Resolution note ${i+1}</div></div>`).join('')}</div>`:``}
+          </div>
+        </div>`).join('')}
+    </div>`}`;
+}
+
+/* ────── NOTIFICATIONS ────── */
+let _notifFilter = 'all';
+function renderNotifications() {
+  return `
+    <div class="page-header"><h2>🔔 Notifications</h2><p>Task assignments, admin messages, and system alerts.</p></div>
+    <div class="card" style="padding:0;overflow:hidden">
+      <div style="padding:18px 20px 0">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${['all','assign','status','system'].map(f=>`<button style="padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:${_notifFilter===f?'rgba(16,185,129,0.1)':'transparent'};color:${_notifFilter===f?'#34d399':'var(--text-soft)'};border-color:${_notifFilter===f?'rgba(16,185,129,0.3)':'var(--border)'};font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer" onclick="filterNotifs('${f}',this)">${f==='all'?'All':f==='assign'?'📋 Assignments':f==='status'?'🔄 Status':'📢 System'}</button>`).join('')}
+          </div>
+          <div style="display:flex;gap:8px">
+            <button style="padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-soft);font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer" onclick="markAllRead()">✓ Mark all read</button>
+          </div>
+        </div>
+        <div id="notifCountBar" style="margin-bottom:14px"></div>
+      </div>
+      <div id="notifList"></div>
+    </div>`;
+}
+
+function initNotifications() { _notifFilter='all'; refreshNotifs(); }
+
+function refreshNotifs() {
+  const list = document.getElementById('notifList');
+  const bar  = document.getElementById('notifCountBar');
+  if (!list) return;
+  const visible = _notifs.filter(n=>_notifFilter==='all'||n.category===_notifFilter);
+  const unread  = _notifs.filter(n=>!n.read).length;
+  bar.innerHTML = `<span style="font-size:0.78rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace">${_notifs.length} total</span>${unread>0?`<span style="background:var(--blue);color:white;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:8px;font-family:'JetBrains Mono',monospace">${unread} unread</span>`:'<span style="font-size:0.72rem;color:var(--green);margin-left:8px;font-family:\'JetBrains Mono\',monospace">All caught up ✓</span>'}`;
+  if (!visible.length) { list.innerHTML=`<div style="text-align:center;padding:48px;color:var(--text-soft)">No notifications.</div>`; return; }
+  list.innerHTML = visible.map(n=>`
+    <div style="display:flex;align-items:flex-start;gap:14px;padding:16px;border-bottom:1px solid var(--border);${!n.read?'background:rgba(16,185,129,0.03);border-left:3px solid #34d399;':''}">
+      <div style="width:36px;height:36px;border-radius:10px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2)">${n.icon}</div>
+      <div style="flex:1">
+        <div style="font-size:0.875rem;font-weight:600;color:var(--text);margin-bottom:3px">${n.title}</div>
+        <div style="font-size:0.8rem;color:var(--text-soft);line-height:1.5">${n.desc}</div>
+        <div style="font-size:0.7rem;color:var(--text-dim);margin-top:5px;font-family:'JetBrains Mono',monospace">${n.time}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+        ${!n.read?`<div style="width:8px;height:8px;border-radius:50%;background:#34d399"></div>`:''}
+        ${!n.read?`<button style="background:none;border:none;cursor:pointer;font-size:0.7rem;color:#34d399;font-family:'Outfit',sans-serif;padding:3px 8px;border-radius:6px" onclick="markRead(${n.id})">Mark read</button>`:''}
+        <button style="background:none;border:none;cursor:pointer;font-size:0.7rem;color:var(--text-dim);font-family:'Outfit',sans-serif;padding:3px 8px;border-radius:6px" onclick="deleteNotif(${n.id})">✕</button>
+      </div>
+    </div>`).join('');
+}
+
+function filterNotifs(type) { _notifFilter=type; renderContent('notifications'); setTimeout(initNotifications,10); }
+function markRead(id) { const n=_notifs.find(n=>n.id===id); if(n){n.read=true; refreshNotifs();} }
+function markAllRead() { _notifs.forEach(n=>n.read=true); refreshNotifs(); showToast('All notifications marked as read','success'); }
+function deleteNotif(id) { _notifs=_notifs.filter(n=>n.id!==id); refreshNotifs(); }
+
+/* ────── PROFILE ────── */
+function renderProfile() {
+  return `
+    <div class="page-header"><h2>👤 My Profile</h2><p>Manage your officer account details.</p></div>
+    <div class="profile-layout">
+      <div class="profile-card">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar">R
+            <div class="profile-avatar-badge"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+          </div>
+        </div>
+        <div class="profile-name">${officerUser.username}</div>
+        <div class="profile-role-badge">Department Officer</div>
+        <div class="profile-stats">
+          <div class="profile-stat"><div class="profile-stat-num">8</div><div class="profile-stat-lbl">Assigned</div></div>
+          <div class="profile-stat"><div class="profile-stat-num">3</div><div class="profile-stat-lbl">Active</div></div>
+          <div class="profile-stat"><div class="profile-stat-num">14</div><div class="profile-stat-lbl">Resolved</div></div>
+        </div>
+        <div class="profile-joined">Joined: February 2024</div>
+      </div>
+      <div class="profile-right">
+        <div class="profile-section">
+          <div class="section-header">
+            <span class="section-title">📋 Officer Details</span>
+            <button class="edit-toggle" onclick="showToast('Edit mode coming soon','info')">✏️ Edit</button>
+          </div>
+          <div class="info-grid">
+            <div class="info-row"><div class="info-label">Username</div><div class="info-value mono">@${officerUser.username}</div></div>
+            <div class="info-row"><div class="info-label">Employee ID</div><div class="info-value mono">${officerUser.employeeId}</div></div>
+            <div class="info-row"><div class="info-label">Department</div><div class="info-value">${officerUser.department}</div></div>
+            <div class="info-row"><div class="info-label">Status</div><div class="info-value" style="color:var(--green)">● On Duty</div></div>
+            <div class="info-row"><div class="info-label">SLA Score</div><div class="info-value" style="color:#34d399">96% (Excellent)</div></div>
+            <div class="info-row"><div class="info-label">Tasks This Month</div><div class="info-value">14 resolved</div></div>
+          </div>
+        </div>
+        <div class="profile-section">
+          <div class="section-header"><span class="section-title">📜 Recent Completed Tasks</span></div>
+          <table class="history-table">
+            <thead><tr><th>Task</th><th>Category</th><th>Resolved On</th><th>Status</th></tr></thead>
+            <tbody>
+              ${_tasks.filter(t=>t.status==='Resolved').map(t=>`<tr>
+                <td>${t.title}</td><td>${t.category}</td>
+                <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem">${t.resolvedDate||'—'}</td>
+                <td><span class="g-badge badge-resolved">Resolved</span></td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div class="profile-section">
+          <div class="section-header"><span class="section-title">🔒 Change Password</span></div>
+          <div class="pwd-grid">
+            <div class="form-group"><label class="form-label">Current Password</label><input class="form-input" type="password" placeholder="Enter current password"/></div>
+            <div class="form-group"><label class="form-label">New Password</label><input class="form-input" type="password" placeholder="Min 8 characters"/></div>
+            <div class="form-group"><label class="form-label">Confirm New Password</label><input class="form-input" type="password" placeholder="Repeat new password"/></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:16px">
+            <button class="btn-primary" onclick="showToast('Password changed successfully! 🔒','success')">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+              Update Password
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ────── HELPERS ────── */
+function toggleCard(id) { document.getElementById(id)?.classList.toggle('expanded'); }
+
+function showModal(title, body, onConfirm) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `<div class="modal-box"><div class="modal-title">${title}</div><div class="modal-body">${body}</div><div class="modal-actions"><button class="btn-secondary" id="mc">Cancel</button><button class="btn-resolve" id="mk"><svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Confirm</button></div></div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('#mc').onclick = ()=>overlay.remove();
+  overlay.querySelector('#mk').onclick = ()=>{ overlay.remove(); onConfirm(); };
+  overlay.onclick = e=>{ if(e.target===overlay) overlay.remove(); };
+}
+
+function showToast(msg, type='info') {
+  const el = document.getElementById('toast');
+  const icons = { success:'✅ ', error:'❌ ', info:'⚡ ' };
+  el.textContent = (icons[type]||'') + msg;
+  el.className = 'toast show';
+  setTimeout(()=>el.classList.remove('show'), 3000);
+}
+
+function logout() { window.location.href='/index.html'; }
+
+/* ────── INIT ────── */
+buildNav();
+renderContent('overview');
+</script>
+</body>
+</html>

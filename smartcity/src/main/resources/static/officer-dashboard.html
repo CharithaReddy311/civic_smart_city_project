@@ -199,15 +199,14 @@
     .activity-desc { font-size: 0.75rem; color: var(--text-soft); margin-top: 2px; line-height: 1.4; }
     .activity-time { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
 
-    /* ASSIGNED TASKS PAGE */
-    .task-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
-    .task-sum-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
-    .task-sum-chip { padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; border: 1px solid; cursor: pointer; transition: all 0.15s; }
-    .task-sum-chip.all      { background: rgba(255,255,255,0.04); color: var(--text-soft); border-color: var(--border); }
-    .task-sum-chip.new-task { background: rgba(245,158,11,0.08); color: #fbbf24; border-color: rgba(245,158,11,0.2); }
-    .task-sum-chip.accepted { background: var(--blue-soft); color: var(--blue-bright); border-color: var(--border2); }
-    .task-sum-chip.progress { background: rgba(16,185,129,0.08); color: #34d399; border-color: rgba(16,185,129,0.2); }
-    .task-sum-chip.resolved { background: rgba(99,102,241,0.08); color: #a5b4fc; border-color: rgba(99,102,241,0.2); }
+    /* ========== ASSIGNED TO ME (GRIEVANCE VIEW) ========== */
+    .grievance-toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+    .grievance-sum-bar { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .grievance-chip { padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; border: 1px solid; cursor: pointer; transition: all 0.15s; }
+    .chip-all      { background: rgba(255,255,255,0.04); color: var(--text-soft); border-color: var(--border); }
+    .chip-new      { background: rgba(245,158,11,0.08); color: #fbbf24; border-color: rgba(245,158,11,0.2); }
+    .chip-accepted { background: var(--blue-soft); color: var(--blue-bright); border-color: var(--border2); }
+    .chip-progress { background: rgba(16,185,129,0.08); color: #34d399; border-color: rgba(16,185,129,0.2); }
     .mg-search-wrap { position: relative; flex: 1; min-width: 200px; }
     .mg-search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; color: var(--text-dim); pointer-events: none; }
     .mg-search { width: 100%; padding: 9px 12px 9px 36px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.875rem; outline: none; transition: border-color 0.2s; }
@@ -216,70 +215,118 @@
     .mg-filter-select { padding: 9px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--text-soft); font-family: 'Outfit', sans-serif; font-size: 0.825rem; outline: none; cursor: pointer; transition: border-color 0.2s; appearance: none; padding-right: 30px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238895aa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
     .mg-filter-select option { background: #1a2540; }
 
-    .task-list { display: flex; flex-direction: column; gap: 10px; }
-    .task-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
-    .task-card:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
-    .task-card.new-task-card  { border-left: 3px solid #fbbf24; }
-    .task-card.accepted-card  { border-left: 3px solid var(--blue-bright); }
-    .task-card.inprog-card    { border-left: 3px solid #34d399; }
-    .task-card.resolved-card  { border-left: 3px solid #a5b4fc; }
-    .task-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; user-select: none; }
-    .task-cat-icon { width: 40px; height: 40px; border-radius: 10px; font-size: 1.15rem; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .task-info { flex: 1; min-width: 0; }
-    .task-title { font-weight: 600; font-size: 0.875rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .task-meta-row { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
-    .task-meta { font-size: 0.72rem; color: var(--text-soft); font-family: 'JetBrains Mono', monospace; }
-    .task-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
-    .task-deadline { font-size: 0.7rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 2px 8px; border-radius: 20px; }
-    .deadline-today    { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
-    .deadline-tomorrow { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
-    .deadline-soon     { background: var(--blue-soft); color: var(--blue-bright); border: 1px solid var(--border2); }
-    .deadline-ok       { background: rgba(16,185,129,0.08); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
-    .task-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .task-chevron { color: var(--text-dim); font-size: 0.8rem; transition: transform 0.2s; }
-    .task-card.expanded .task-chevron { transform: rotate(180deg); }
-    .task-detail { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); animation: fadeUp 0.2s ease both; }
-    .task-card.expanded .task-detail { display: block; }
-    .task-detail-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 14px 0; }
-    .task-detail-item { display: flex; flex-direction: column; gap: 3px; }
-    .task-detail-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600; }
-    .task-detail-value { font-size: 0.83rem; color: var(--text); font-weight: 500; }
-    .task-desc-box { font-size: 0.83rem; color: var(--text-soft); line-height: 1.6; padding: 10px 14px; background: var(--surface2); border-radius: 8px; margin-bottom: 14px; border: 1px solid var(--border); }
-    .task-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    /* GRIEVANCE CARD - "Assigned to me" view */
+    .grievance-list { display: flex; flex-direction: column; gap: 12px; }
+    .grievance-card {
+      background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .grievance-card:hover { border-color: var(--border2); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+    .grievance-card.g-new      { border-left: 3px solid #fbbf24; }
+    .grievance-card.g-accepted { border-left: 3px solid var(--blue-bright); }
+    .grievance-card.g-inprog   { border-left: 3px solid #34d399; }
+    .grievance-card.g-resolved { border-left: 3px solid #a5b4fc; opacity: 0.8; }
 
-    /* PROGRESS NOTE AREA */
-    .progress-note-area { margin-top: 14px; display: flex; flex-direction: column; gap: 10px; padding: 14px; background: var(--surface2); border-radius: 10px; border: 1px solid var(--border); }
-    .progress-note-label { font-size: 0.75rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.08em; }
-    .progress-note-input { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 9px 12px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.83rem; outline: none; resize: vertical; min-height: 72px; transition: border-color 0.2s; width: 100%; }
-    .progress-note-input:focus { border-color: rgba(16,185,129,0.4); }
-    .progress-note-input::placeholder { color: var(--text-dim); }
-    .progress-photo-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-    .progress-photo-btn { display: flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px dashed rgba(16,185,129,0.4); border-radius: 8px; background: transparent; color: #34d399; font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.15s; position: relative; }
-    .progress-photo-btn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
-    .progress-photo-btn:hover { background: rgba(16,185,129,0.08); }
-    .progress-photo-thumbs { display: flex; gap: 6px; flex-wrap: wrap; }
-    .progress-thumb { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(16,185,129,0.3); }
-    .note-history { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-    .note-entry { padding: 8px 12px; background: var(--panel); border-radius: 8px; border-left: 3px solid rgba(16,185,129,0.5); }
-    .note-entry-text { font-size: 0.82rem; color: var(--text); }
-    .note-entry-meta { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 3px; }
+    /* Top strip: compact header row */
+    .gcard-header {
+      display: flex; align-items: center; gap: 12px; padding: 14px 18px;
+      cursor: pointer; user-select: none; border-bottom: 1px solid transparent; transition: border-color 0.15s;
+    }
+    .grievance-card.expanded .gcard-header { border-bottom-color: var(--border); }
+    .gcard-icon { width: 42px; height: 42px; border-radius: 10px; font-size: 1.2rem; background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .gcard-info { flex: 1; min-width: 0; }
+    .gcard-title { font-weight: 700; font-size: 0.9rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .gcard-meta-row { display: flex; align-items: center; gap: 8px; margin-top: 3px; flex-wrap: wrap; }
+    .gcard-meta { font-size: 0.72rem; color: var(--text-soft); font-family: 'JetBrains Mono', monospace; }
+    .gcard-sep { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
+    .gcard-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .deadline-chip { font-size: 0.7rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; padding: 3px 9px; border-radius: 20px; }
+    .dl-today    { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+    .dl-tomorrow { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+    .dl-soon     { background: var(--blue-soft); color: var(--blue-bright); border: 1px solid var(--border2); }
+    .dl-ok       { background: rgba(16,185,129,0.08); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+    .gcard-chevron { color: var(--text-dim); font-size: 0.75rem; transition: transform 0.25s; flex-shrink: 0; }
+    .grievance-card.expanded .gcard-chevron { transform: rotate(180deg); }
 
-    /* BUTTONS */
-    .btn-secondary { padding: 10px 22px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+    /* UPDATE BUTTONS row visible always below header */
+    .gcard-actions-strip {
+      display: flex; align-items: center; gap: 8px; padding: 10px 18px;
+      background: rgba(0,0,0,0.15); border-bottom: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .gcard-actions-strip .lbl { font-size: 0.72rem; font-weight: 600; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
+
+    /* DETAIL PANEL */
+    .gcard-detail { display: none; padding: 18px; animation: fadeUp 0.2s ease both; }
+    .grievance-card.expanded .gcard-detail { display: block; }
+
+    .detail-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 16px; }
+    .detail-item { display: flex; flex-direction: column; gap: 3px; }
+    .detail-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 700; }
+    .detail-value { font-size: 0.84rem; color: var(--text); font-weight: 500; }
+    .detail-value.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-soft); }
+
+    .desc-box { font-size: 0.83rem; color: var(--text-soft); line-height: 1.65; padding: 12px 14px; background: var(--surface2); border-radius: 10px; margin-bottom: 16px; border: 1px solid var(--border); }
+
+    /* ========== RESOLUTION FORM ========== */
+    .resolution-form {
+      background: var(--surface2); border: 1px solid rgba(16,185,129,0.18); border-radius: 12px; padding: 18px;
+    }
+    .rf-title { font-size: 0.78rem; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; display: flex; align-items: center; gap: 7px; }
+    .rf-title::before { content:''; display:inline-block; width:10px; height:10px; border-radius:50%; background:#34d399; box-shadow:0 0 8px #34d399; }
+
+    /* Note history */
+    .note-history { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+    .note-entry { padding: 10px 14px; background: var(--panel); border-radius: 8px; border-left: 3px solid rgba(16,185,129,0.5); }
+    .note-entry-text { font-size: 0.83rem; color: var(--text); line-height: 1.5; }
+    .note-entry-meta { font-size: 0.68rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-top: 4px; display: flex; align-items: center; gap: 6px; }
+    .note-entry-meta .note-by { color: #34d399; }
+
+    /* Textarea */
+    .rf-label { font-size: 0.75rem; font-weight: 700; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 7px; display: block; }
+    .rf-textarea { width: 100%; padding: 11px 14px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.85rem; outline: none; resize: vertical; min-height: 80px; transition: border-color 0.2s, box-shadow 0.2s; }
+    .rf-textarea:focus { border-color: rgba(16,185,129,0.45); box-shadow: 0 0 0 3px rgba(16,185,129,0.08); }
+    .rf-textarea::placeholder { color: var(--text-dim); }
+
+    /* Photo upload zone */
+    .photo-upload-zone {
+      border: 2px dashed rgba(16,185,129,0.3); border-radius: 10px; padding: 14px 16px;
+      background: rgba(16,185,129,0.03); display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      transition: border-color 0.2s, background 0.2s; cursor: pointer; position: relative; overflow: hidden;
+      margin: 12px 0;
+    }
+    .photo-upload-zone:hover { border-color: rgba(16,185,129,0.55); background: rgba(16,185,129,0.07); }
+    .photo-upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .puz-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .puz-text { display: flex; flex-direction: column; gap: 2px; }
+    .puz-primary { font-size: 0.85rem; font-weight: 700; color: #34d399; }
+    .puz-secondary { font-size: 0.72rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+    .photo-thumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .photo-thumb-wrap { position: relative; }
+    .photo-thumb { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(16,185,129,0.35); transition: transform 0.15s; }
+    .photo-thumb:hover { transform: scale(1.05); }
+    .photo-thumb-del { position: absolute; top: -5px; right: -5px; width: 18px; height: 18px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; color: white; cursor: pointer; border: 2px solid var(--surface2); font-weight: 900; }
+
+    /* Form action row */
+    .rf-action-row { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+    .rf-char-count { font-size: 0.7rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; margin-right: auto; }
+
+    /* ========== BUTTONS ========== */
+    .btn-secondary { padding: 9px 20px; border-radius: 10px; border: 1px solid var(--border); background: transparent; color: var(--text-soft); font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; }
     .btn-secondary:hover { background: rgba(255,255,255,0.05); color: var(--text); }
-    .btn-primary { padding: 10px 28px; border-radius: 10px; border: none; background: var(--blue); color: white; font-family: 'Outfit', sans-serif; font-size: 0.875rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(26,86,219,0.3); }
+    .btn-primary { padding: 9px 24px; border-radius: 10px; border: none; background: var(--blue); color: white; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(26,86,219,0.35); }
     .btn-primary:hover { background: var(--blue-bright); transform: translateY(-1px); }
-    .btn-primary svg { width: 16px; height: 16px; }
-    .btn-accept { padding: 9px 20px; border-radius: 10px; border: 1px solid rgba(16,185,129,0.35); background: rgba(16,185,129,0.1); color: #34d399; font-family: 'Outfit', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+    .btn-accept { padding: 8px 18px; border-radius: 10px; border: 1px solid rgba(16,185,129,0.35); background: rgba(16,185,129,0.1); color: #34d399; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
     .btn-accept:hover { background: rgba(16,185,129,0.2); border-color: rgba(16,185,129,0.55); }
-    .btn-resolve { padding: 9px 20px; border-radius: 10px; border: none; background: var(--green); color: white; font-family: 'Outfit', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; box-shadow: 0 3px 12px rgba(16,185,129,0.3); }
+    .btn-start { padding: 8px 18px; border-radius: 10px; border: none; background: var(--blue); color: white; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 3px 12px rgba(26,86,219,0.3); white-space: nowrap; }
+    .btn-start:hover { background: var(--blue-bright); transform: translateY(-1px); }
+    .btn-resolve { padding: 9px 22px; border-radius: 10px; border: none; background: var(--green); color: white; font-family: 'Outfit', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 7px; box-shadow: 0 3px 14px rgba(16,185,129,0.35); white-space: nowrap; }
     .btn-resolve:hover { background: #0ea674; transform: translateY(-1px); }
-    .btn-resolve svg, .btn-accept svg { width: 14px; height: 14px; }
-    .btn-danger { padding: 8px 18px; border-radius: 9px; border: 1px solid rgba(239,68,68,0.3); background: rgba(239,68,68,0.08); color: #f87171; font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+    .btn-save-note { padding: 8px 18px; border-radius: 10px; border: 1px solid rgba(59,127,245,0.35); background: var(--blue-soft); color: var(--blue-bright); font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .btn-save-note:hover { background: rgba(26,86,219,0.18); border-color: rgba(59,127,245,0.55); }
+    .btn-danger { padding: 8px 16px; border-radius: 9px; border: 1px solid rgba(239,68,68,0.3); background: rgba(239,68,68,0.08); color: #f87171; font-family: 'Outfit', sans-serif; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.15s; display: inline-flex; align-items: center; gap: 5px; }
     .btn-danger:hover { background: rgba(239,68,68,0.15); border-color: rgba(239,68,68,0.5); }
-    .btn-danger svg { width: 14px; height: 14px; }
 
-    /* COMPLETED STATS */
+    /* COMPLETED PAGE */
     .completed-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-bottom: 20px; }
     .c-stat { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; text-align: center; animation: fadeUp 0.4s ease both; }
     .c-stat-num { font-weight: 800; font-size: 1.8rem; letter-spacing: -1px; color: var(--text); }
@@ -310,15 +357,13 @@
     .info-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600; }
     .info-value { font-size: 0.875rem; color: var(--text); font-weight: 500; }
     .info-value.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; color: var(--text-soft); }
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .pwd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .pwd-grid .form-group:first-child { grid-column: 1 / -1; }
     .form-group { display: flex; flex-direction: column; gap: 7px; }
-    .form-group.full { grid-column: 1 / -1; }
     .form-label { font-size: 0.78rem; font-weight: 600; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.08em; }
     .form-input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.875rem; transition: border-color 0.2s, box-shadow 0.2s; outline: none; width: 100%; }
     .form-input:focus { border-color: rgba(16,185,129,0.4); box-shadow: 0 0 0 3px rgba(16,185,129,0.08); }
     .form-input::placeholder { color: var(--text-dim); }
-    .pwd-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .pwd-grid .form-group:first-child { grid-column: 1 / -1; }
     .history-table { width: 100%; border-collapse: collapse; }
     .history-table th { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); font-weight: 600; text-align: left; padding: 0 12px 10px; border-bottom: 1px solid var(--border); }
     .history-table td { padding: 11px 12px; border-bottom: 1px solid var(--border); font-size: 0.83rem; color: var(--text-soft); vertical-align: middle; }
@@ -334,7 +379,7 @@
     .modal-body  { font-size: 0.875rem; color: var(--text-soft); line-height: 1.6; margin-bottom: 22px; }
     .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
 
-    /* COMING SOON */
+    /* EMPTY / COMING SOON */
     .coming-soon { text-align: center; padding: 80px 32px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); animation: fadeUp 0.4s ease both; }
     .coming-soon .cs-icon { font-size: 3.5rem; margin-bottom: 16px; }
     .coming-soon h2 { font-weight: 800; font-size: 1.3rem; color: var(--text); margin-bottom: 8px; }
@@ -343,7 +388,7 @@
     .mg-empty .me-icon { font-size: 2.5rem; margin-bottom: 10px; }
 
     /* TOAST */
-    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid rgba(16,185,129,0.3); color: var(--text); padding: 12px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: 500; transform: translateY(70px); opacity: 0; transition: all 0.3s cubic-bezier(0.22,1,0.36,1); z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 10px; pointer-events: none; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface2); border: 1px solid rgba(16,185,129,0.3); color: var(--text); padding: 12px 20px; border-radius: 12px; font-size: 0.85rem; font-weight: 500; transform: translateY(70px); opacity: 0; transition: all 0.3s cubic-bezier(0.22,1,0.36,1); z-index: 999; box-shadow: 0 8px 32px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 10px; pointer-events: none; max-width: 340px; }
     .toast.show { transform: translateY(0); opacity: 1; }
 
     @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
@@ -351,7 +396,7 @@
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: rgba(16,185,129,0.3); border-radius: 10px; }
     @media (max-width: 1100px) { .stats-grid{grid-template-columns:repeat(2,1fr)} .profile-layout{grid-template-columns:1fr} }
-    @media (max-width: 900px)  { .content-grid{grid-template-columns:1fr} .form-grid{grid-template-columns:1fr} .info-grid{grid-template-columns:1fr} }
+    @media (max-width: 900px)  { .content-grid{grid-template-columns:1fr} .detail-grid{grid-template-columns:1fr 1fr} }
     @media (max-width: 640px)  { .sidebar{display:none} .content-area{padding:16px} .topbar{padding:0 16px} }
   </style>
 </head>
@@ -360,7 +405,9 @@
   <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      </div>
       <span class="logo-text">Civic<span>Pulse</span></span>
     </div>
     <div class="sidebar-role">
@@ -404,14 +451,14 @@ document.getElementById('topbarDate').textContent =
 
 const NAV_ITEMS = [
   { section:'Work', items:[
-    { id:'overview',   label:'Overview',        icon:'🏠', badge:null },
-    { id:'assigned',   label:'Assigned Tasks',  icon:'📋', badge:'5' },
-    { id:'inprogress', label:'In Progress',     icon:'🔧', badge:'2' },
-    { id:'completed',  label:'Completed',       icon:'✅', badge:null },
+    { id:'overview',   label:'Overview',          icon:'🏠', badge:null },
+    { id:'assigned',   label:'Assigned to Me',    icon:'📋', badge:'5' },
+    { id:'inprogress', label:'In Progress',        icon:'🔧', badge:'2' },
+    { id:'completed',  label:'Completed',          icon:'✅', badge:null },
   ]},
   { section:'Info', items:[
-    { id:'profile',       label:'My Profile',    icon:'👤', badge:null },
-    { id:'notifications', label:'Notifications', icon:'🔔', badge:'3' },
+    { id:'profile',       label:'My Profile',      icon:'👤', badge:null },
+    { id:'notifications', label:'Notifications',   icon:'🔔', badge:'3' },
   ]},
 ];
 
@@ -443,26 +490,28 @@ function navigateTo(id) {
 
 /* ────── TASK DATA ────── */
 let _tasks = [
-  { id:'TSK-001', icon:'💡', title:'Street light repair – MG Road Jn.', category:'Electricity', location:'MG Road Junction 2', priority:'HIGH', deadline:'Today', assignedBy:'Admin Priya', assignedDate:'08 Mar 2026', status:'New', citizen:'rahul_k', desc:'Three street lights at MG Road Junction are non-functional for 2 weeks. Safety hazard at night. Citizen has reported repeated failures.', notes:[] },
-  { id:'TSK-002', icon:'💧', title:'Drain blockage – Patel Nagar', category:'Drainage', location:'Patel Nagar, Street 3', priority:'HIGH', deadline:'Tomorrow', assignedBy:'Admin Priya', assignedDate:'07 Mar 2026', status:'In Progress', citizen:'suresh_v', desc:'Main drainage pipe is blocked causing overflow onto the road. Multiple households affected. Needs immediate clearing.', notes:['Team dispatched. Equipment at site.'] },
-  { id:'TSK-003', icon:'🛣️', title:'Road repair – Industrial Zone Gate 3', category:'Roads', location:'Industrial Zone, Gate 3', priority:'MEDIUM', deadline:'13 Mar 2026', assignedBy:'Admin Raj', assignedDate:'06 Mar 2026', status:'New', citizen:'priya_m', desc:'Large potholes near industrial zone gate. Heavy vehicles causing further damage. Requires patching and resurfacing.', notes:[] },
-  { id:'TSK-004', icon:'🗑️', title:'Garbage pile – Sector 7 market', category:'Sanitation', location:'Sector 7, Market Area', priority:'MEDIUM', deadline:'12 Mar 2026', assignedBy:'Admin Raj', assignedDate:'05 Mar 2026', status:'Accepted', citizen:'meena_r', desc:'Uncollected garbage pile near vegetable market. Health risk to vendors and customers. Needs immediate collection and bin placement.', notes:[] },
-  { id:'TSK-005', icon:'🌳', title:'Fallen tree – Park Road', category:'Parks', location:'Park Road, Sector 2', priority:'LOW', deadline:'15 Mar 2026', assignedBy:'Admin Priya', assignedDate:'04 Mar 2026', status:'In Progress', citizen:'john_d', desc:'A large tree branch has fallen on the footpath making it impassable. Residents using road instead, causing traffic issues.', notes:['Branch partially cleared. Full removal scheduled.'] },
-  { id:'TSK-006', icon:'💧', title:'Water meter repair – Block B', category:'Water Supply', location:'Block B, Ward 5', priority:'HIGH', deadline:'01 Mar 2026', assignedBy:'Admin Priya', assignedDate:'27 Feb 2026', status:'Resolved', citizen:'kumar_v', desc:'Leaking water meter wasting significant water. Fixed and meter replaced.', notes:['Inspected. Meter replaced on 01 Mar 2026.'], resolvedDate:'01 Mar 2026' },
-  { id:'TSK-007', icon:'💡', title:'Transformer repair – Substation 3', category:'Electricity', location:'Substation 3, Zone A', priority:'HIGH', deadline:'28 Feb 2026', assignedBy:'Admin Raj', assignedDate:'25 Feb 2026', status:'Resolved', citizen:'ravi_p', desc:'Power transformer failure causing outage in Zone A. Resolved with replacement unit.', notes:['Replacement unit installed. Power restored.'], resolvedDate:'28 Feb 2026' },
-  { id:'TSK-008', icon:'🛣️', title:'Pothole repair – Nehru Street', category:'Roads', location:'Nehru Street, Block C', priority:'MEDIUM', deadline:'25 Feb 2026', assignedBy:'Admin Priya', assignedDate:'22 Feb 2026', status:'Resolved', citizen:'latha_k', desc:'Multiple potholes along Nehru Street. Patching completed.', notes:['Road patched. Surface sealed.'], resolvedDate:'25 Feb 2026' },
+  { id:'GRV-001', icon:'💡', title:'Street light repair – MG Road Jn.', category:'Electricity', location:'MG Road Junction 2', priority:'HIGH', deadline:'Today', assignedBy:'Admin Priya', assignedDate:'08 Mar 2026', status:'New', citizen:'rahul_k', desc:'Three street lights at MG Road Junction are non-functional for 2 weeks. Safety hazard at night. Citizen has reported repeated failures.', notes:[], photos:[] },
+  { id:'GRV-002', icon:'💧', title:'Drain blockage – Patel Nagar', category:'Drainage', location:'Patel Nagar, Street 3', priority:'HIGH', deadline:'Tomorrow', assignedBy:'Admin Priya', assignedDate:'07 Mar 2026', status:'In Progress', citizen:'suresh_v', desc:'Main drainage pipe is blocked causing overflow onto the road. Multiple households affected. Needs immediate clearing.', notes:[{text:'Team dispatched. Equipment at site.', time:'07 Mar 2026 · 11:45'}], photos:[] },
+  { id:'GRV-003', icon:'🛣️', title:'Road repair – Industrial Zone Gate 3', category:'Roads', location:'Industrial Zone, Gate 3', priority:'MEDIUM', deadline:'13 Mar 2026', assignedBy:'Admin Raj', assignedDate:'06 Mar 2026', status:'New', citizen:'priya_m', desc:'Large potholes near industrial zone gate. Heavy vehicles causing further damage. Requires patching and resurfacing.', notes:[], photos:[] },
+  { id:'GRV-004', icon:'🗑️', title:'Garbage pile – Sector 7 market', category:'Sanitation', location:'Sector 7, Market Area', priority:'MEDIUM', deadline:'12 Mar 2026', assignedBy:'Admin Raj', assignedDate:'05 Mar 2026', status:'Accepted', citizen:'meena_r', desc:'Uncollected garbage pile near vegetable market. Health risk to vendors and customers. Needs immediate collection and bin placement.', notes:[], photos:[] },
+  { id:'GRV-005', icon:'🌳', title:'Fallen tree – Park Road', category:'Parks', location:'Park Road, Sector 2', priority:'LOW', deadline:'15 Mar 2026', assignedBy:'Admin Priya', assignedDate:'04 Mar 2026', status:'In Progress', citizen:'john_d', desc:'A large tree branch has fallen on the footpath making it impassable. Residents using road instead, causing traffic issues.', notes:[{text:'Branch partially cleared. Full removal scheduled for tomorrow.', time:'08 Mar 2026 · 09:30'}], photos:[] },
+  { id:'GRV-006', icon:'💧', title:'Water meter repair – Block B', category:'Water Supply', location:'Block B, Ward 5', priority:'HIGH', deadline:'01 Mar 2026', assignedBy:'Admin Priya', assignedDate:'27 Feb 2026', status:'Resolved', citizen:'kumar_v', desc:'Leaking water meter wasting significant water. Fixed and meter replaced.', notes:[{text:'Inspected. Meter replaced on 01 Mar 2026.', time:'01 Mar 2026 · 14:30'}], photos:[], resolvedDate:'01 Mar 2026' },
+  { id:'GRV-007', icon:'💡', title:'Transformer repair – Substation 3', category:'Electricity', location:'Substation 3, Zone A', priority:'HIGH', deadline:'28 Feb 2026', assignedBy:'Admin Raj', assignedDate:'25 Feb 2026', status:'Resolved', citizen:'ravi_p', desc:'Power transformer failure causing outage in Zone A. Resolved with replacement unit.', notes:[{text:'Replacement unit installed. Power restored.', time:'28 Feb 2026 · 16:00'}], photos:[], resolvedDate:'28 Feb 2026' },
+  { id:'GRV-008', icon:'🛣️', title:'Pothole repair – Nehru Street', category:'Roads', location:'Nehru Street, Block C', priority:'MEDIUM', deadline:'25 Feb 2026', assignedBy:'Admin Priya', assignedDate:'22 Feb 2026', status:'Resolved', citizen:'latha_k', desc:'Multiple potholes along Nehru Street. Patching completed.', notes:[{text:'Road patched. Surface sealed.', time:'25 Feb 2026 · 13:15'}], photos:[], resolvedDate:'25 Feb 2026' },
 ];
 
 let _notifs = [
-  { id:1, type:'assign', read:false, icon:'📋', title:'New task assigned', desc:'TSK-001: Street light repair at MG Road Junction. Priority: HIGH. Deadline: Today.', time:'1 hr ago', category:'assign' },
-  { id:2, type:'system', read:false, icon:'⚠️', title:'SLA Warning', desc:'TSK-003 deadline is approaching in 2 days. Please update the status.', time:'3 hrs ago', category:'system' },
-  { id:3, type:'status', read:false, icon:'💬', title:'Admin comment on TSK-002', desc:'Admin Priya added a note: "Please expedite. Resident has escalated complaint."', time:'1 day ago', category:'status' },
+  { id:1, type:'assign', read:false, icon:'📋', title:'New grievance assigned', desc:'GRV-001: Street light repair at MG Road Junction. Priority: HIGH. Deadline: Today.', time:'1 hr ago', category:'assign' },
+  { id:2, type:'system', read:false, icon:'⚠️', title:'SLA Warning', desc:'GRV-003 deadline is approaching in 2 days. Please update the status.', time:'3 hrs ago', category:'system' },
+  { id:3, type:'status', read:false, icon:'💬', title:'Admin comment on GRV-002', desc:'Admin Priya added a note: "Please expedite. Resident has escalated complaint."', time:'1 day ago', category:'status' },
   { id:4, type:'system', read:true, icon:'🎉', title:'Monthly performance report ready', desc:'Your March 2026 performance report has been generated. SLA score: 96%.', time:'2 days ago', category:'system' },
 ];
 
 const priorityColor = p => p==='HIGH'?'#f87171':p==='MEDIUM'?'#fbbf24':'#34d399';
 const badgeClass    = s => s==='New'?'badge-new':s==='Accepted'||s==='In Progress'?'badge-progress':'badge-resolved';
-const deadlineClass = d => d==='Today'?'deadline-today':d==='Tomorrow'?'deadline-tomorrow':'deadline-ok';
+const deadlineClass = d => d==='Today'?'dl-today':d==='Tomorrow'?'dl-tomorrow':'dl-ok';
+const gCardClass    = s => s==='New'?'g-new':s==='Accepted'?'g-accepted':s==='In Progress'?'g-inprog':'g-resolved';
+const now = () => new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}) + ' · ' + new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
 
 /* ────── RENDER ROUTER ────── */
 function renderContent(id) {
@@ -481,21 +530,20 @@ function renderOverview() {
   const assigned   = _tasks.filter(t=>t.status==='New'||t.status==='Accepted').length;
   const inprog     = _tasks.filter(t=>t.status==='In Progress').length;
   const resolved   = _tasks.filter(t=>t.status==='Resolved').length;
-  const highUrgent = _tasks.filter(t=>t.priority==='HIGH'&&t.status!=='Resolved').length;
 
   return `
     <div class="welcome-banner">
       <div class="welcome-text">
         <div class="welcome-title">Ready to serve, <span>${officerUser.username}</span> 👷</div>
-        <div class="welcome-sub">You have ${assigned} assigned tasks and ${inprog} currently in progress. Keep up the great work!</div>
+        <div class="welcome-sub">You have ${assigned} assigned grievances and ${inprog} currently in progress. Keep up the great work!</div>
       </div>
       <div class="welcome-emoji">🔧</div>
     </div>
 
     <div class="stats-grid">
-      <div class="stat-card"><div class="stat-header"><div class="stat-icon">📋</div><span class="stat-trend amber">${assigned} pending</span></div><div class="stat-num">${assigned}</div><div class="stat-label">Assigned Tasks</div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-icon">📋</div><span class="stat-trend amber">${assigned} pending</span></div><div class="stat-num">${assigned}</div><div class="stat-label">Assigned Grievances</div></div>
       <div class="stat-card"><div class="stat-header"><div class="stat-icon">⚙️</div><span class="stat-trend blue">Active</span></div><div class="stat-num">${inprog}</div><div class="stat-label">In Progress</div></div>
-      <div class="stat-card"><div class="stat-header"><div class="stat-icon">✅</div><span class="stat-trend">This month</span></div><div class="stat-num">${resolved}</div><div class="stat-label">Completed</div></div>
+      <div class="stat-card"><div class="stat-header"><div class="stat-icon">✅</div><span class="stat-trend">This month</span></div><div class="stat-num">${resolved}</div><div class="stat-label">Resolved</div></div>
       <div class="stat-card"><div class="stat-header"><div class="stat-icon">🏆</div><span class="stat-trend">Excellent</span></div><div class="stat-num">96%</div><div class="stat-label">SLA Score</div></div>
     </div>
 
@@ -504,7 +552,7 @@ function renderOverview() {
     <div class="content-grid">
       <div class="card">
         <div class="card-header">
-          <span class="card-title">My Current Tasks</span>
+          <span class="card-title">My Assigned Grievances</span>
           <span class="card-action" onclick="navigateTo('assigned')">View all →</span>
         </div>
         ${_tasks.filter(t=>t.status!=='Resolved').slice(0,4).map(t=>`
@@ -522,15 +570,14 @@ function renderOverview() {
         <div class="card">
           <div class="card-header"><span class="card-title">Quick Actions</span></div>
           <div class="quick-actions">
-            <button class="action-btn" onclick="navigateTo('assigned')"><span class="action-icon">📋</span><span><span class="action-title">View Assigned Tasks</span><span class="action-sub">${assigned} tasks awaiting</span></span><span class="action-arrow">→</span></button>
-            <button class="action-btn" onclick="navigateTo('inprogress')"><span class="action-icon">🔧</span><span><span class="action-title">Update In Progress</span><span class="action-sub">${inprog} tasks active</span></span><span class="action-arrow">→</span></button>
-            <button class="action-btn" onclick="navigateTo('completed')"><span class="action-icon">✅</span><span><span class="action-title">View Completed</span><span class="action-sub">${resolved} tasks resolved</span></span><span class="action-arrow">→</span></button>
+            <button class="action-btn" onclick="navigateTo('assigned')"><span class="action-icon">📋</span><span><span class="action-title">View Assigned</span><span class="action-sub">${assigned} grievances awaiting</span></span><span class="action-arrow">→</span></button>
+            <button class="action-btn" onclick="navigateTo('inprogress')"><span class="action-icon">🔧</span><span><span class="action-title">Update Progress</span><span class="action-sub">${inprog} tasks active</span></span><span class="action-arrow">→</span></button>
+            <button class="action-btn" onclick="navigateTo('completed')"><span class="action-icon">✅</span><span><span class="action-title">View Completed</span><span class="action-sub">${resolved} grievances resolved</span></span><span class="action-arrow">→</span></button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Performance Card -->
     <div class="perf-card">
       <div class="card-header">
         <span class="card-title">📊 Performance Metrics</span>
@@ -557,30 +604,29 @@ function renderOverview() {
       </div>
     </div>
 
-    <!-- Recent Activity -->
     <div class="card" style="margin-top:16px;animation-delay:0.35s">
       <div class="card-header"><span class="card-title">Recent Activity</span></div>
       <div class="activity-list">
-        <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-body"><div class="activity-title">TSK-006 marked as Resolved</div><div class="activity-desc">Water meter repair at Block B completed successfully.</div><div class="activity-time">01 Mar 2026 · 14:30</div></div></div>
-        <div class="activity-item"><div class="activity-dot blue">📋</div><div class="activity-body"><div class="activity-title">TSK-001 assigned to you</div><div class="activity-desc">Street light repair at MG Road Junction. Priority: HIGH.</div><div class="activity-time">08 Mar 2026 · 09:15</div></div></div>
-        <div class="activity-item"><div class="activity-dot amber">🔧</div><div class="activity-body"><div class="activity-title">Progress note saved on TSK-002</div><div class="activity-desc">Team dispatched. Equipment at site.</div><div class="activity-time">07 Mar 2026 · 11:45</div></div></div>
-        <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-body"><div class="activity-title">TSK-007 marked as Resolved</div><div class="activity-desc">Transformer repair at Substation 3 completed.</div><div class="activity-time">28 Feb 2026 · 16:00</div></div></div>
+        <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-body"><div class="activity-title">GRV-006 marked as Resolved</div><div class="activity-desc">Water meter repair at Block B completed successfully.</div><div class="activity-time">01 Mar 2026 · 14:30</div></div></div>
+        <div class="activity-item"><div class="activity-dot blue">📋</div><div class="activity-body"><div class="activity-title">GRV-001 assigned to you</div><div class="activity-desc">Street light repair at MG Road Junction. Priority: HIGH.</div><div class="activity-time">08 Mar 2026 · 09:15</div></div></div>
+        <div class="activity-item"><div class="activity-dot amber">🔧</div><div class="activity-body"><div class="activity-title">Progress note saved on GRV-002</div><div class="activity-desc">Team dispatched. Equipment at site.</div><div class="activity-time">07 Mar 2026 · 11:45</div></div></div>
+        <div class="activity-item"><div class="activity-dot green">✅</div><div class="activity-body"><div class="activity-title">GRV-007 marked as Resolved</div><div class="activity-desc">Transformer repair at Substation 3 completed.</div><div class="activity-time">28 Feb 2026 · 16:00</div></div></div>
       </div>
     </div>`;
 }
 
-/* ────── ASSIGNED ────── */
+/* ────── ASSIGNED TO ME ────── */
 function renderAssigned() {
   return `
     <div class="page-header">
-      <h2>📋 Assigned Tasks</h2>
-      <p>Tasks assigned to you by admin. Accept them to begin working.</p>
+      <h2>📋 Assigned to Me</h2>
+      <p>Grievances assigned by admin. Accept a grievance to begin working, then update progress or resolve it.</p>
     </div>
-    <div class="task-sum-bar" id="assignedSumBar"></div>
-    <div class="task-toolbar">
-      <div class="mg-search-wrap" style="flex:1;min-width:200px">
+    <div class="grievance-sum-bar" id="assignedSumBar"></div>
+    <div class="grievance-toolbar">
+      <div class="mg-search-wrap">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-        <input class="mg-search" id="assignedSearch" type="text" placeholder="Search tasks..." oninput="refreshAssigned()"/>
+        <input class="mg-search" id="assignedSearch" type="text" placeholder="Search grievances..." oninput="refreshAssigned()"/>
       </div>
       <select class="mg-filter-select" id="assignedPriFilter" onchange="refreshAssigned()">
         <option value="all">All Priorities</option>
@@ -589,7 +635,7 @@ function renderAssigned() {
         <option value="LOW">🟢 Low</option>
       </select>
     </div>
-    <div class="task-list" id="assignedList"></div>`;
+    <div class="grievance-list" id="assignedList"></div>`;
 }
 
 function initAssigned() { refreshAssigned(); }
@@ -604,67 +650,219 @@ function refreshAssigned() {
   const accC   = tasks.filter(t=>t.status==='Accepted').length;
 
   bar.innerHTML = `
-    <span class="task-sum-chip all">${tasks.length} Total</span>
-    <span class="task-sum-chip new-task">${newC} New</span>
-    <span class="task-sum-chip accepted">${accC} Accepted</span>`;
+    <span class="grievance-chip chip-all">${tasks.length} Total</span>
+    <span class="grievance-chip chip-new">${newC} New</span>
+    <span class="grievance-chip chip-accepted">${accC} Accepted</span>`;
 
   const visible = tasks.filter(t=>{
-    const ms = !search||t.title.toLowerCase().includes(search)||t.category.toLowerCase().includes(search);
+    const ms = !search||t.title.toLowerCase().includes(search)||t.category.toLowerCase().includes(search)||t.id.toLowerCase().includes(search);
     return ms && (priF==='all'||t.priority===priF);
   });
 
-  if (!visible.length) { list.innerHTML=`<div class="mg-empty"><div class="me-icon">✅</div><p>No tasks match your filters.</p></div>`; return; }
+  if (!visible.length) { list.innerHTML=`<div class="mg-empty"><div class="me-icon">✅</div><p>No grievances match your filters.</p></div>`; return; }
 
-  list.innerHTML = visible.map(t=>`
-    <div class="task-card ${t.status==='New'?'new-task-card':'accepted-card'}" id="tcard-${t.id}">
-      <div class="task-header" onclick="toggleCard('tcard-${t.id}')">
-        <div class="task-cat-icon">${t.icon}</div>
-        <div class="task-info">
-          <div class="task-title">${t.title}</div>
-          <div class="task-meta-row">
-            <span class="task-meta">${t.id}</span><span class="task-sep"></span>
-            <span class="task-meta">${t.category}</span><span class="task-sep"></span>
-            <span class="task-meta">By ${t.assignedBy}</span>
+  list.innerHTML = visible.map(t => buildGrievanceCard(t, 'assigned')).join('');
+}
+
+/* Build a grievance card (shared by assigned + inprogress) */
+function buildGrievanceCard(t, context) {
+  const isNew       = t.status==='New';
+  const isAccepted  = t.status==='Accepted';
+  const isInProgress= t.status==='In Progress';
+
+  // Update buttons strip (always visible in header area)
+  let actionStrip = `<div class="gcard-actions-strip">
+    <span class="lbl">Update:</span>`;
+  if (isNew) {
+    actionStrip += `<button class="btn-accept" onclick="event.stopPropagation();acceptGrievance('${t.id}')">✓ Accept</button>`;
+  }
+  if (isAccepted) {
+    actionStrip += `
+      <button class="btn-start" onclick="event.stopPropagation();startGrievance('${t.id}')">▶ Start Working</button>
+      <span style="font-size:0.75rem;color:#34d399;font-family:'JetBrains Mono',monospace;margin-left:4px">✓ Accepted</span>`;
+  }
+  if (isInProgress) {
+    actionStrip += `
+      <button class="btn-save-note" onclick="event.stopPropagation();focusNoteArea('${t.id}')">💬 Add Note</button>
+      <button class="btn-resolve" onclick="event.stopPropagation();confirmResolve('${t.id}')">✅ Mark Resolved</button>`;
+  }
+  actionStrip += `</div>`;
+
+  // Notes history
+  const notesHtml = t.notes.length ? `
+    <div style="margin-bottom:14px">
+      <div class="rf-label">Progress Notes (${t.notes.length})</div>
+      <div class="note-history">
+        ${t.notes.map((n,i)=>`<div class="note-entry">
+          <div class="note-entry-text">${typeof n==='object'?n.text:n}</div>
+          <div class="note-entry-meta"><span class="note-by">@${officerUser.username}</span> · ${typeof n==='object'?n.time:`Note ${i+1}`}</div>
+        </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  // Photo thumbs if any
+  const photosHtml = (t.photos && t.photos.length) ? `
+    <div style="margin-bottom:14px">
+      <div class="rf-label">Attached Photos</div>
+      <div class="photo-thumbs">${t.photos.map((src,i)=>`
+        <div class="photo-thumb-wrap">
+          <img class="photo-thumb" src="${src}" alt="photo ${i+1}"/>
+        </div>`).join('')}
+      </div>
+    </div>` : '';
+
+  // Resolution form (for In Progress)
+  const resolutionForm = isInProgress ? `
+    <div class="resolution-form">
+      <div class="rf-title">Resolution Form</div>
+      ${notesHtml}
+      ${photosHtml}
+      <label class="rf-label" for="note-${t.id}">Add Progress / Resolution Note</label>
+      <textarea class="rf-textarea" id="note-${t.id}" placeholder="Describe what you've done, what's remaining, any issues encountered..." oninput="updateCharCount('${t.id}',this)"></textarea>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">
+        <span class="rf-char-count" id="cc-${t.id}">0 / 500</span>
+        <span style="font-size:0.72rem;color:var(--text-dim)">Required before resolving</span>
+      </div>
+
+      <!-- Image Upload Zone -->
+      <div class="photo-upload-zone" id="puz-${t.id}">
+        <input type="file" accept="image/*" multiple onchange="handlePhotos('${t.id}',this)"/>
+        <div class="puz-icon">📷</div>
+        <div class="puz-text">
+          <div class="puz-primary">Upload Site Photos</div>
+          <div class="puz-secondary">JPG, PNG, WEBP · Click or drag to upload</div>
+        </div>
+      </div>
+      <div class="photo-thumbs" id="thumbs-${t.id}"></div>
+
+      <div class="rf-action-row">
+        <button class="btn-secondary" onclick="event.stopPropagation();saveNote('${t.id}')">💾 Save Note</button>
+        <button class="btn-resolve" onclick="event.stopPropagation();confirmResolve('${t.id}')">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          Mark as Resolved
+        </button>
+      </div>
+    </div>` : `${notesHtml}${photosHtml}`;
+
+  return `
+    <div class="grievance-card ${gCardClass(t.status)}" id="gc-${t.id}">
+      <div class="gcard-header" onclick="toggleCard('gc-${t.id}')">
+        <div class="gcard-icon">${t.icon}</div>
+        <div class="gcard-info">
+          <div class="gcard-title">${t.title}</div>
+          <div class="gcard-meta-row">
+            <span class="gcard-meta">${t.id}</span>
+            <span class="gcard-sep"></span>
+            <span class="gcard-meta">${t.category}</span>
+            <span class="gcard-sep"></span>
+            <span class="gcard-meta">📍 ${t.location}</span>
           </div>
         </div>
-        <div class="task-right">
-          <span class="task-deadline ${deadlineClass(t.deadline)}">⏰ ${t.deadline}</span>
-          <span style="font-size:0.7rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
+        <div class="gcard-right">
+          <span class="deadline-chip ${deadlineClass(t.deadline)}">⏰ ${t.deadline}</span>
+          <span style="font-size:0.68rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace;white-space:nowrap">${t.priority}</span>
           <span class="g-badge ${badgeClass(t.status)}">${t.status}</span>
-          <span class="task-chevron">▼</span>
+          <span class="gcard-chevron">▼</span>
         </div>
       </div>
-      <div class="task-detail">
-        <div class="task-detail-grid">
-          <div class="task-detail-item"><div class="task-detail-label">Location</div><div class="task-detail-value">📍 ${t.location}</div></div>
-          <div class="task-detail-item"><div class="task-detail-label">Citizen</div><div class="task-detail-value">👤 @${t.citizen}</div></div>
-          <div class="task-detail-item"><div class="task-detail-label">Assigned On</div><div class="task-detail-value" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem">${t.assignedDate}</div></div>
+
+      ${actionStrip}
+
+      <div class="gcard-detail">
+        <div class="detail-grid">
+          <div class="detail-item"><div class="detail-label">Assigned By</div><div class="detail-value">${t.assignedBy}</div></div>
+          <div class="detail-item"><div class="detail-label">Citizen</div><div class="detail-value">👤 @${t.citizen}</div></div>
+          <div class="detail-item"><div class="detail-label">Assigned On</div><div class="detail-value mono">${t.assignedDate}</div></div>
         </div>
-        <div class="task-desc-box">${t.desc}</div>
-        <div class="task-actions">
-          ${t.status==='New'?`
-            <button class="btn-accept" onclick="acceptTask('${t.id}')">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              Accept Task
-            </button>` : `
-            <button class="btn-resolve" onclick="startTask('${t.id}')">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              Start Working
-            </button>
-            <span style="font-size:0.78rem;color:var(--green);font-family:'JetBrains Mono',monospace">✓ Accepted</span>`}
-        </div>
+        <div class="desc-box">${t.desc}</div>
+        ${resolutionForm}
+        ${(!isInProgress && (isNew || isAccepted)) ? `
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+          ${isNew ? `<button class="btn-accept" onclick="acceptGrievance('${t.id}')">✓ Accept Grievance</button>` : ''}
+          ${isAccepted ? `<button class="btn-start" onclick="startGrievance('${t.id}')">▶ Start Working</button>` : ''}
+        </div>` : ''}
       </div>
-    </div>`).join('');
+    </div>`;
 }
 
-function acceptTask(id) {
-  const t = _tasks.find(t=>t.id===id);
-  if (t) { t.status='Accepted'; refreshAssigned(); showToast(`Task ${id} accepted! ✓`,'success'); }
+function updateCharCount(id, el) {
+  const cc = document.getElementById('cc-'+id);
+  if (cc) cc.textContent = `${el.value.length} / 500`;
 }
 
-function startTask(id) {
+function focusNoteArea(taskId) {
+  const card = document.getElementById('gc-'+taskId);
+  if (card && !card.classList.contains('expanded')) card.classList.add('expanded');
+  setTimeout(()=>{
+    const el = document.getElementById('note-'+taskId);
+    if (el) { el.focus(); el.scrollIntoView({behavior:'smooth',block:'center'}); }
+  }, 100);
+}
+
+function handlePhotos(taskId, input) {
+  const thumbs = document.getElementById('thumbs-'+taskId);
+  const t = _tasks.find(t=>t.id===taskId);
+  for (const f of input.files) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      if (t && t.photos) t.photos.push(e.target.result);
+      if (thumbs) {
+        const wrap = document.createElement('div'); wrap.className='photo-thumb-wrap';
+        const img  = document.createElement('img'); img.className='photo-thumb'; img.src=e.target.result;
+        const del  = document.createElement('div'); del.className='photo-thumb-del'; del.textContent='✕';
+        const photoIdx = t.photos.length - 1;
+        del.onclick = ()=>{ wrap.remove(); if(t.photos) t.photos.splice(photoIdx,1); };
+        wrap.appendChild(img); wrap.appendChild(del); thumbs.appendChild(wrap);
+      }
+    };
+    reader.readAsDataURL(f);
+  }
+  input.value = '';
+  showToast(`${input.files.length > 1 ? input.files.length + ' photos' : 'Photo'} attached 📷`,'success');
+}
+
+function acceptGrievance(id) {
   const t = _tasks.find(t=>t.id===id);
-  if (t) { t.status='In Progress'; showToast(`Task ${id} moved to In Progress 🔧`,'info'); navigateTo('inprogress'); }
+  if (t) { t.status='Accepted'; refreshAssigned(); showToast(`Grievance ${id} accepted ✓`,'success'); }
+}
+
+function startGrievance(id) {
+  const t = _tasks.find(t=>t.id===id);
+  if (t) { t.status='In Progress'; showToast(`${id} moved to In Progress 🔧`,'info'); navigateTo('inprogress'); }
+}
+
+function saveNote(taskId) {
+  const el   = document.getElementById('note-'+taskId);
+  const text = el?.value.trim();
+  if (!text) { showToast('Please write a note first','error'); return; }
+  if (text.length < 10) { showToast('Note too short. Add more detail.','error'); return; }
+  const t = _tasks.find(t=>t.id===taskId);
+  if (t) { t.notes.push({ text, time: now() }); el.value = ''; }
+  const cc = document.getElementById('cc-'+taskId);
+  if (cc) cc.textContent = '0 / 500';
+  // re-render the note history inside open card
+  if (activeNav === 'inprogress') { refreshInProgress(); setTimeout(()=>{ document.getElementById('gc-'+taskId)?.classList.add('expanded'); },50); }
+  else { refreshAssigned(); setTimeout(()=>{ document.getElementById('gc-'+taskId)?.classList.add('expanded'); },50); }
+  showToast('Progress note saved ✓','success');
+}
+
+function confirmResolve(taskId) {
+  const t = _tasks.find(t=>t.id===taskId);
+  if (!t) return;
+  const note = document.getElementById('note-'+taskId)?.value.trim();
+  if (t.notes.length === 0 && !note) {
+    showToast('Please add at least one progress note before resolving.','error'); return;
+  }
+  if (note) t.notes.push({ text: note, time: now() });
+  showModal('Mark Grievance as Resolved',
+    `Confirm that <strong>"${t.title}"</strong> has been fully resolved? The citizen and admin will be notified via email.`,
+    ()=>{
+      t.status='Resolved';
+      t.resolvedDate = new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+      if (activeNav === 'inprogress') refreshInProgress(); else refreshAssigned();
+      showToast(`Grievance ${taskId} resolved! 🎉`,'success');
+      setTimeout(()=>showToast('Citizen feedback request sent 📧','info'),1600);
+    });
 }
 
 /* ────── IN PROGRESS ────── */
@@ -672,110 +870,26 @@ function renderInProgress() {
   return `
     <div class="page-header">
       <h2>🔧 In Progress</h2>
-      <p>Add resolution notes, upload photos, and mark tasks as resolved when done.</p>
+      <p>Add resolution notes, upload photos, and mark grievances as resolved when work is done.</p>
     </div>
-    <div class="task-list" id="inprogressList"></div>`;
+    <div class="grievance-sum-bar" id="inprogSumBar"></div>
+    <div class="grievance-list" id="inprogressList"></div>`;
 }
 
 function initInProgress() { refreshInProgress(); }
 
 function refreshInProgress() {
+  const bar   = document.getElementById('inprogSumBar');
   const list  = document.getElementById('inprogressList');
   const tasks = _tasks.filter(t=>t.status==='In Progress');
 
+  if (bar) bar.innerHTML = `<span class="grievance-chip chip-progress">${tasks.length} In Progress</span>`;
+
   if (!tasks.length) {
-    list.innerHTML = `<div class="mg-empty"><div class="me-icon">🎉</div><p>No tasks in progress right now. Go to Assigned Tasks to start one!</p></div>`;
+    list.innerHTML = `<div class="mg-empty"><div class="me-icon">🎉</div><p>No grievances in progress right now. Go to <strong>Assigned to Me</strong> to start one!</p></div>`;
     return;
   }
-
-  list.innerHTML = tasks.map(t=>`
-    <div class="task-card inprog-card" id="icard-${t.id}">
-      <div class="task-header" onclick="toggleCard('icard-${t.id}')">
-        <div class="task-cat-icon">${t.icon}</div>
-        <div class="task-info">
-          <div class="task-title">${t.title}</div>
-          <div class="task-meta-row">
-            <span class="task-meta">${t.id}</span><span class="task-sep"></span>
-            <span class="task-meta">${t.category}</span><span class="task-sep"></span>
-            <span class="task-meta">📍 ${t.location}</span>
-          </div>
-        </div>
-        <div class="task-right">
-          <span class="task-deadline ${deadlineClass(t.deadline)}">⏰ ${t.deadline}</span>
-          <span style="font-size:0.7rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
-          <span class="g-badge badge-progress">In Progress</span>
-          <span class="task-chevron">▼</span>
-        </div>
-      </div>
-      <div class="task-detail">
-        <div class="task-detail-grid">
-          <div class="task-detail-item"><div class="task-detail-label">Citizen</div><div class="task-detail-value">👤 @${t.citizen}</div></div>
-          <div class="task-detail-item"><div class="task-detail-label">Assigned By</div><div class="task-detail-value">${t.assignedBy}</div></div>
-          <div class="task-detail-item"><div class="task-detail-label">Deadline</div><div class="task-detail-value" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem">${t.deadline}</div></div>
-        </div>
-        <div class="task-desc-box">${t.desc}</div>
-        ${t.notes.length?`
-        <div style="margin-bottom:14px">
-          <div style="font-size:0.75rem;font-weight:700;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px">Progress Notes</div>
-          <div class="note-history">${t.notes.map((n,i)=>`<div class="note-entry"><div class="note-entry-text">${n}</div><div class="note-entry-meta">Note ${i+1}</div></div>`).join('')}</div>
-        </div>`:``}
-        <div class="progress-note-area">
-          <div class="progress-note-label">Add Progress Update</div>
-          <textarea class="progress-note-input" id="note-${t.id}" placeholder="Describe what you've done, what's remaining, any issues encountered..."></textarea>
-          <div class="progress-photo-row">
-            <button class="progress-photo-btn">
-              📷 Attach Photos
-              <input type="file" accept="image/*" multiple onchange="handlePhotos('${t.id}',this)"/>
-            </button>
-            <div class="progress-photo-thumbs" id="thumbs-${t.id}"></div>
-          </div>
-          <div style="display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
-            <button class="btn-secondary" onclick="saveNote('${t.id}')">💾 Save Note</button>
-            <button class="btn-resolve" onclick="confirmResolve('${t.id}')">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-              Mark as Resolved
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>`).join('');
-}
-
-function handlePhotos(taskId, input) {
-  const thumbs = document.getElementById('thumbs-'+taskId);
-  for (const f of input.files) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.createElement('img'); img.className='progress-thumb'; img.src=e.target.result;
-      thumbs.appendChild(img);
-    };
-    reader.readAsDataURL(f);
-  }
-  input.value='';
-}
-
-function saveNote(taskId) {
-  const el = document.getElementById('note-'+taskId);
-  const text = el?.value.trim();
-  if (!text) { showToast('Please write a note first','error'); return; }
-  const t = _tasks.find(t=>t.id===taskId);
-  if (t) { t.notes.push(text); el.value=''; }
-  refreshInProgress();
-  setTimeout(()=>{ document.getElementById('icard-'+taskId)?.classList.add('expanded'); },50);
-  showToast('Progress note saved ✓','success');
-}
-
-function confirmResolve(taskId) {
-  const t = _tasks.find(t=>t.id===taskId);
-  if (!t) return;
-  showModal('Mark as Resolved',`Confirm that "<strong>${t.title}</strong>" has been fully resolved? The citizen and admin will be notified.`,()=>{
-    t.status='Resolved';
-    t.resolvedDate=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
-    refreshInProgress();
-    showToast(`Task ${taskId} marked as Resolved! 🎉`,'success');
-    // redirect to feedback page prompt
-    setTimeout(()=>showToast('Citizen feedback will be requested automatically 📧','info'),1500);
-  });
+  list.innerHTML = tasks.map(t => buildGrievanceCard(t, 'inprogress')).join('');
 }
 
 /* ────── COMPLETED ────── */
@@ -784,41 +898,51 @@ function renderCompleted() {
   const highP    = resolved.filter(t=>t.priority==='HIGH').length;
 
   return `
-    <div class="page-header"><h2>✅ Completed Tasks</h2><p>Your resolution history. Great work keeping the city running!</p></div>
+    <div class="page-header"><h2>✅ Completed Grievances</h2><p>Your resolution history. Great work keeping the city running!</p></div>
     <div class="completed-stats">
       <div class="c-stat" style="animation-delay:0.05s"><div class="c-stat-icon">✅</div><div class="c-stat-num">${resolved.length}</div><div class="c-stat-label">Total Resolved</div></div>
       <div class="c-stat" style="animation-delay:0.10s"><div class="c-stat-icon">🔴</div><div class="c-stat-num">${highP}</div><div class="c-stat-label">High Priority</div></div>
       <div class="c-stat" style="animation-delay:0.15s"><div class="c-stat-icon">🏆</div><div class="c-stat-num">96%</div><div class="c-stat-label">SLA Score</div></div>
     </div>
     <div class="divider"></div>
-    ${!resolved.length?`<div class="mg-empty"><div class="me-icon">📋</div><p>No completed tasks yet.</p></div>`:`
-    <div class="task-list">
+    ${!resolved.length?`<div class="mg-empty"><div class="me-icon">📋</div><p>No completed grievances yet.</p></div>`:`
+    <div class="grievance-list">
       ${resolved.map(t=>`
-        <div class="task-card resolved-card" id="ccard-${t.id}">
-          <div class="task-header" onclick="toggleCard('ccard-${t.id}')">
-            <div class="task-cat-icon">${t.icon}</div>
-            <div class="task-info">
-              <div class="task-title">${t.title}</div>
-              <div class="task-meta-row">
-                <span class="task-meta">${t.id}</span><span class="task-sep"></span>
-                <span class="task-meta">${t.category}</span><span class="task-sep"></span>
-                <span class="task-meta" style="color:var(--green)">✓ Resolved ${t.resolvedDate||''}</span>
+        <div class="grievance-card g-resolved" id="cg-${t.id}">
+          <div class="gcard-header" onclick="toggleCard('cg-${t.id}')">
+            <div class="gcard-icon">${t.icon}</div>
+            <div class="gcard-info">
+              <div class="gcard-title">${t.title}</div>
+              <div class="gcard-meta-row">
+                <span class="gcard-meta">${t.id}</span><span class="gcard-sep"></span>
+                <span class="gcard-meta">${t.category}</span><span class="gcard-sep"></span>
+                <span class="gcard-meta" style="color:var(--green)">✓ Resolved ${t.resolvedDate||''}</span>
               </div>
             </div>
-            <div class="task-right">
-              <span style="font-size:0.7rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
+            <div class="gcard-right">
+              <span style="font-size:0.68rem;font-weight:700;color:${priorityColor(t.priority)};background:${priorityColor(t.priority)}18;padding:2px 8px;border-radius:20px;border:1px solid ${priorityColor(t.priority)}33;font-family:'JetBrains Mono',monospace">${t.priority}</span>
               <span class="g-badge badge-resolved">Resolved</span>
-              <span class="task-chevron">▼</span>
+              <span class="gcard-chevron">▼</span>
             </div>
           </div>
-          <div class="task-detail">
-            <div class="task-detail-grid">
-              <div class="task-detail-item"><div class="task-detail-label">Location</div><div class="task-detail-value">📍 ${t.location}</div></div>
-              <div class="task-detail-item"><div class="task-detail-label">Citizen</div><div class="task-detail-value">👤 @${t.citizen}</div></div>
-              <div class="task-detail-item"><div class="task-detail-label">Resolved On</div><div class="task-detail-value" style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--green)">${t.resolvedDate||'—'}</div></div>
+          <div class="gcard-detail">
+            <div class="detail-grid">
+              <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value">📍 ${t.location}</div></div>
+              <div class="detail-item"><div class="detail-label">Citizen</div><div class="detail-value">👤 @${t.citizen}</div></div>
+              <div class="detail-item"><div class="detail-label">Resolved On</div><div class="detail-value mono" style="color:var(--green)">${t.resolvedDate||'—'}</div></div>
             </div>
-            <div class="task-desc-box">${t.desc}</div>
-            ${t.notes.length?`<div class="note-history">${t.notes.map((n,i)=>`<div class="note-entry"><div class="note-entry-text">${n}</div><div class="note-entry-meta">Resolution note ${i+1}</div></div>`).join('')}</div>`:``}
+            <div class="desc-box">${t.desc}</div>
+            ${t.notes.length?`
+            <div class="rf-label">Resolution Notes</div>
+            <div class="note-history">${t.notes.map((n,i)=>`<div class="note-entry">
+              <div class="note-entry-text">${typeof n==='object'?n.text:n}</div>
+              <div class="note-entry-meta"><span class="note-by">@${officerUser.username}</span> · ${typeof n==='object'?n.time:`Note ${i+1}`}</div>
+            </div>`).join('')}</div>`:``}
+            ${(t.photos&&t.photos.length)?`
+            <div style="margin-top:12px">
+              <div class="rf-label">Uploaded Photos</div>
+              <div class="photo-thumbs">${t.photos.map(src=>`<img class="photo-thumb" src="${src}"/>`).join('')}</div>
+            </div>`:''}
           </div>
         </div>`).join('')}
     </div>`}`;
@@ -833,11 +957,9 @@ function renderNotifications() {
       <div style="padding:18px 20px 0">
         <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap">
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            ${['all','assign','status','system'].map(f=>`<button style="padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:${_notifFilter===f?'rgba(16,185,129,0.1)':'transparent'};color:${_notifFilter===f?'#34d399':'var(--text-soft)'};border-color:${_notifFilter===f?'rgba(16,185,129,0.3)':'var(--border)'};font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer" onclick="filterNotifs('${f}',this)">${f==='all'?'All':f==='assign'?'📋 Assignments':f==='status'?'🔄 Status':'📢 System'}</button>`).join('')}
+            ${['all','assign','status','system'].map(f=>`<button style="padding:5px 14px;border-radius:20px;border:1px solid var(--border);background:${_notifFilter===f?'rgba(16,185,129,0.1)':'transparent'};color:${_notifFilter===f?'#34d399':'var(--text-soft)'};border-color:${_notifFilter===f?'rgba(16,185,129,0.3)':'var(--border)'};font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer" onclick="filterNotifs('${f}')">${f==='all'?'All':f==='assign'?'📋 Assignments':f==='status'?'🔄 Status':'📢 System'}</button>`).join('')}
           </div>
-          <div style="display:flex;gap:8px">
-            <button style="padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-soft);font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer" onclick="markAllRead()">✓ Mark all read</button>
-          </div>
+          <button style="padding:5px 12px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text-soft);font-family:'Outfit',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer" onclick="markAllRead()">✓ Mark all read</button>
         </div>
         <div id="notifCountBar" style="margin-bottom:14px"></div>
       </div>
@@ -853,7 +975,7 @@ function refreshNotifs() {
   if (!list) return;
   const visible = _notifs.filter(n=>_notifFilter==='all'||n.category===_notifFilter);
   const unread  = _notifs.filter(n=>!n.read).length;
-  bar.innerHTML = `<span style="font-size:0.78rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace">${_notifs.length} total</span>${unread>0?`<span style="background:var(--blue);color:white;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:8px;font-family:'JetBrains Mono',monospace">${unread} unread</span>`:'<span style="font-size:0.72rem;color:var(--green);margin-left:8px;font-family:\'JetBrains Mono\',monospace">All caught up ✓</span>'}`;
+  if (bar) bar.innerHTML = `<span style="font-size:0.78rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace">${_notifs.length} total</span>${unread>0?`<span style="background:var(--blue);color:white;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:8px;font-family:'JetBrains Mono',monospace">${unread} unread</span>`:'<span style="font-size:0.72rem;color:var(--green);margin-left:8px">All caught up ✓</span>'}`;
   if (!visible.length) { list.innerHTML=`<div style="text-align:center;padding:48px;color:var(--text-soft)">No notifications.</div>`; return; }
   list.innerHTML = visible.map(n=>`
     <div style="display:flex;align-items:flex-start;gap:14px;padding:16px;border-bottom:1px solid var(--border);${!n.read?'background:rgba(16,185,129,0.03);border-left:3px solid #34d399;':''}">
@@ -912,9 +1034,9 @@ function renderProfile() {
           </div>
         </div>
         <div class="profile-section">
-          <div class="section-header"><span class="section-title">📜 Recent Completed Tasks</span></div>
+          <div class="section-header"><span class="section-title">📜 Recent Completed</span></div>
           <table class="history-table">
-            <thead><tr><th>Task</th><th>Category</th><th>Resolved On</th><th>Status</th></tr></thead>
+            <thead><tr><th>Grievance</th><th>Category</th><th>Resolved On</th><th>Status</th></tr></thead>
             <tbody>
               ${_tasks.filter(t=>t.status==='Resolved').map(t=>`<tr>
                 <td>${t.title}</td><td>${t.category}</td>
@@ -933,7 +1055,7 @@ function renderProfile() {
           </div>
           <div style="display:flex;justify-content:flex-end;margin-top:16px">
             <button class="btn-primary" onclick="showToast('Password changed successfully! 🔒','success')">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="15" height="15"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
               Update Password
             </button>
           </div>
@@ -960,10 +1082,11 @@ function showToast(msg, type='info') {
   const icons = { success:'✅ ', error:'❌ ', info:'⚡ ' };
   el.textContent = (icons[type]||'') + msg;
   el.className = 'toast show';
-  setTimeout(()=>el.classList.remove('show'), 3000);
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>el.classList.remove('show'), 3200);
 }
 
-function logout() { window.location.href='/index.html'; }
+function logout() { showToast('Signing out...','info'); }
 
 /* ────── INIT ────── */
 buildNav();

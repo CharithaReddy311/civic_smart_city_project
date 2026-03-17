@@ -20,8 +20,6 @@
     }
     html,body{height:100%;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;}
     .app{display:flex;height:100vh;width:100vw;overflow:hidden;}
-
-    /* SIDEBAR */
     .sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);height:100vh;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0;position:relative;}
     .sidebar::before{content:'';position:absolute;top:0;left:0;right:0;height:180px;background:linear-gradient(180deg,var(--blue-glow) 0%,transparent 100%);pointer-events:none;}
     .sidebar-logo{padding:22px 20px 18px;display:flex;align-items:center;gap:11px;border-bottom:1px solid var(--border);position:relative;z-index:1;flex-shrink:0;}
@@ -45,8 +43,6 @@
     .sidebar-footer{margin-top:auto;padding:14px;border-top:1px solid var(--border);flex-shrink:0;}
     .logout-btn{width:100%;padding:10px 14px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.18);border-radius:10px;color:#f87171;font-family:'Outfit',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:8px;justify-content:center;}
     .logout-btn:hover{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.35);}
-
-    /* MAIN */
     .main{flex:1;min-width:0;height:100vh;display:flex;flex-direction:column;overflow:hidden;}
     .topbar{background:rgba(13,19,32,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
     .topbar-left h1{font-weight:700;font-size:1.15rem;color:var(--text);letter-spacing:-0.3px;}
@@ -55,8 +51,6 @@
     .topbar-chip{padding:5px 14px;border-radius:20px;background:var(--blue-soft);border:1px solid var(--border2);color:var(--blue-bright);font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;}
     .avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#6366f1);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;box-shadow:0 0 12px rgba(26,86,219,0.3);}
     .content-area{flex:1;overflow-y:auto;padding:28px 32px;}
-
-    /* SHARED */
     .page-header{margin-bottom:24px;animation:fadeUp 0.4s ease both;}
     .page-header h2{font-weight:800;font-size:1.3rem;color:var(--text);letter-spacing:-0.4px;}
     .page-header p{font-size:0.85rem;color:var(--text-soft);margin-top:4px;}
@@ -111,16 +105,12 @@
     .action-sub{font-size:0.72rem;color:var(--text-soft);margin-top:1px;display:block;}
     .action-arrow{margin-left:auto;color:var(--text-dim);transition:color 0.15s,transform 0.15s;}
     .action-btn:hover .action-arrow{color:var(--blue-bright);transform:translateX(3px);}
-
-    /* TABLE */
     .data-table{width:100%;border-collapse:collapse;}
     .data-table th{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:600;text-align:left;padding:0 14px 10px;border-bottom:1px solid var(--border);}
     .data-table td{padding:11px 14px;border-bottom:1px solid var(--border);font-size:0.83rem;color:var(--text-soft);vertical-align:middle;}
     .data-table tr:last-child td{border-bottom:none;}
     .data-table tr:hover td{background:rgba(255,255,255,0.02);}
     .data-table td:first-child{color:var(--text);font-weight:500;}
-
-    /* SEARCH & FILTER */
     .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
     .search-wrap{position:relative;flex:1;min-width:200px;}
     .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--text-dim);pointer-events:none;}
@@ -129,8 +119,6 @@
     .search-input::placeholder{color:var(--text-dim);}
     .filter-select{padding:9px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text-soft);font-family:'Outfit',sans-serif;font-size:0.825rem;outline:none;cursor:pointer;appearance:none;padding-right:30px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238895aa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
     .filter-select option{background:#1a2540;}
-
-    /* GRIEVANCE CARDS */
     .grievance-list{display:flex;flex-direction:column;gap:10px;}
     .grv-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color 0.2s,box-shadow 0.2s;}
     .grv-card:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
@@ -152,13 +140,9 @@
     .grv-detail-value{font-size:0.83rem;color:var(--text);font-weight:500;}
     .grv-desc-box{font-size:0.83rem;color:var(--text-soft);line-height:1.6;padding:10px 14px;background:var(--surface2);border-radius:8px;margin-bottom:12px;border:1px solid var(--border);}
     .grv-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;align-items:center;}
-
-    /* ASSIGN MODAL */
     .assign-select{padding:9px 14px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:0.875rem;outline:none;cursor:pointer;min-width:200px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238895aa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
     .assign-select:focus{border-color:var(--blue-mid);}
     .assign-select option{background:#1a2540;}
-
-    /* USER MANAGEMENT */
     .user-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s,box-shadow 0.2s;}
     .user-card:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,0.2);}
     .user-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--blue),#6366f1);color:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;}
@@ -168,8 +152,6 @@
     .user-name{font-weight:700;font-size:0.9rem;color:var(--text);}
     .user-meta{font-size:0.72rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace;margin-top:2px;}
     .user-actions{display:flex;gap:8px;flex-shrink:0;}
-
-    /* SLA / ANALYTICS */
     .sla-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
     .sla-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;animation:fadeUp 0.4s ease both;}
     .sla-num{font-weight:800;font-size:2rem;letter-spacing:-1px;margin-bottom:4px;}
@@ -181,8 +163,6 @@
     .bar-track{flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:20px;overflow:hidden;}
     .bar-fill{height:100%;border-radius:20px;transition:width 1s ease;}
     .bar-val{font-size:0.75rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace;width:36px;text-align:right;flex-shrink:0;}
-
-    /* FORM */
     .form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
     .form-label{font-size:0.78rem;font-weight:600;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.08em;}
     .form-input,.form-select,.form-textarea{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Outfit',sans-serif;font-size:0.875rem;transition:border-color 0.2s,box-shadow 0.2s;outline:none;width:100%;}
@@ -191,8 +171,6 @@
     .form-select{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='%238895aa'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
     .form-select option{background:#1a2540;}
     .form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-
-    /* BUTTONS */
     .btn-primary{padding:10px 28px;border-radius:10px;border:none;background:var(--blue);color:white;font-family:'Outfit',sans-serif;font-size:0.875rem;font-weight:700;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(26,86,219,0.3);}
     .btn-primary:hover{background:var(--blue-bright);transform:translateY(-1px);}
     .btn-primary svg{width:16px;height:16px;}
@@ -204,8 +182,6 @@
     .btn-sm.danger:hover{background:rgba(239,68,68,0.15);}
     .btn-sm.green{background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.25);color:#34d399;}
     .btn-sm.green:hover{background:rgba(16,185,129,0.15);}
-
-    /* SUM CHIPS */
     .sum-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
     .sum-chip{padding:5px 14px;border-radius:20px;font-size:0.75rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid;}
     .sum-chip.all{background:rgba(255,255,255,0.04);color:var(--text-soft);border-color:var(--border);}
@@ -213,27 +189,20 @@
     .sum-chip.progress{background:var(--blue-soft);color:var(--blue-bright);border-color:var(--border2);}
     .sum-chip.resolved{background:rgba(16,185,129,0.08);color:#34d399;border-color:rgba(16,185,129,0.2);}
     .sum-chip.urgent{background:rgba(239,68,68,0.08);color:#f87171;border-color:rgba(239,68,68,0.2);}
-
-    /* MODAL */
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:center;justify-content:center;animation:fadeIn 0.2s ease;}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     .modal-box{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:28px;max-width:480px;width:90%;animation:fadeUp 0.25s ease;}
     .modal-title{font-weight:800;font-size:1.05rem;color:var(--text);margin-bottom:10px;}
     .modal-body{font-size:0.875rem;color:var(--text-soft);line-height:1.6;margin-bottom:18px;}
     .modal-actions{display:flex;gap:10px;justify-content:flex-end;}
-
-    /* COMING SOON */
     .coming-soon{text-align:center;padding:80px 32px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);animation:fadeUp 0.4s ease both;}
     .coming-soon .cs-icon{font-size:3.5rem;margin-bottom:16px;}
     .coming-soon h2{font-weight:800;font-size:1.3rem;color:var(--text);margin-bottom:8px;}
     .coming-soon p{color:var(--text-soft);font-size:0.875rem;}
-
-    /* TOAST */
     .toast{position:fixed;bottom:24px;right:24px;background:var(--surface2);border:1px solid var(--border2);color:var(--text);padding:12px 20px;border-radius:12px;font-size:0.85rem;font-weight:500;transform:translateY(70px);opacity:0;transition:all 0.3s cubic-bezier(0.22,1,0.36,1);z-index:999;box-shadow:0 8px 32px rgba(0,0,0,0.4);display:flex;align-items:center;gap:10px;pointer-events:none;}
     .toast.show{transform:translateY(0);opacity:1;}
     .empty-state{text-align:center;padding:60px 24px;background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);color:var(--text-soft);}
     .empty-icon{font-size:2.5rem;margin-bottom:10px;}
-
     @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
     ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px;}
     @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}.sla-grid{grid-template-columns:1fr 1fr}}
@@ -243,7 +212,6 @@
 </head>
 <body>
 <div class="app">
-  <!-- SIDEBAR -->
   <nav class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
@@ -262,7 +230,6 @@
     </div>
   </nav>
 
-  <!-- MAIN -->
   <div class="main">
     <div class="topbar">
       <div class="topbar-left">
@@ -283,16 +250,22 @@
 document.getElementById('topbarDate').textContent =
   new Date().toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
+/* ─────────────────────────────────────────
+   NAV ITEMS
+   ── CHANGE 1: Added Analytics & Reports
+      under the Analytics section
+───────────────────────────────────────── */
 const NAV_ITEMS = [
   {section:'Management', items:[
-    {id:'overview',  label:'Dashboard',       icon:'🏠', badge:null},
-    {id:'allissues', label:'All Grievances',  icon:'📋', badge:'12'},
-    {id:'assign',    label:'Assign Officers', icon:'👷', badge:'5'},
-    {id:'users',     label:'Manage Users',    icon:'👥', badge:null},
+    {id:'overview',   label:'Dashboard',          icon:'🏠', badge:null},
+    {id:'allissues',  label:'All Grievances',     icon:'📋', badge:'12'},
+    {id:'assign',     label:'Assign Officers',    icon:'👷', badge:'5'},
+    {id:'users',      label:'Manage Users',       icon:'👥', badge:null},
   ]},
   {section:'Analytics', items:[
-    {id:'reports',  label:'SLA Reports',     icon:'📊', badge:null},
-    {id:'settings', label:'System Settings', icon:'⚙️', badge:null},
+    {id:'analytics',  label:'Analytics & Reports',icon:'📊', badge:null},  /* ← NEW */
+    {id:'reports',    label:'SLA Reports',        icon:'📈', badge:null},
+    {id:'settings',   label:'System Settings',    icon:'⚙️', badge:null},
   ]},
 ];
 
@@ -353,15 +326,19 @@ let _users = [
 const priorityColor = p => p==='HIGH'?'#f87171':p==='MEDIUM'?'#fbbf24':'#34d399';
 const badgeClass    = s => s==='Pending'?'badge-pending':s==='In Progress'?'badge-progress':'badge-resolved';
 
-/* ─── RENDER ROUTER ─── */
+/* ─────────────────────────────────────────
+   RENDER ROUTER
+   ── CHANGE 2: Added analytics route
+───────────────────────────────────────── */
 function renderContent(id) {
   const el = document.getElementById('dashboardContent');
-  if      (id==='overview')  el.innerHTML = renderOverview();
-  else if (id==='allissues') { el.innerHTML = renderAllGrievances(); initAllGrievances(); }
-  else if (id==='assign')    { el.innerHTML = renderAssign(); initAssign(); }
-  else if (id==='users')     { el.innerHTML = renderUsers(); initUsers(); }
-  else if (id==='reports')   el.innerHTML = renderReports();
-  else if (id==='settings')  el.innerHTML = renderSettings();
+  if      (id==='overview')   el.innerHTML = renderOverview();
+  else if (id==='allissues')  { el.innerHTML = renderAllGrievances(); initAllGrievances(); }
+  else if (id==='assign')     { el.innerHTML = renderAssign(); initAssign(); }
+  else if (id==='users')      { el.innerHTML = renderUsers(); initUsers(); }
+  else if (id==='analytics')  el.innerHTML = renderAnalytics();   /* ← NEW */
+  else if (id==='reports')    el.innerHTML = renderReports();
+  else if (id==='settings')   el.innerHTML = renderSettings();
   else el.innerHTML = `<div class="coming-soon"><div class="cs-icon">🚧</div><h2>Coming Soon</h2><p>This section will be available shortly.</p></div>`;
 }
 
@@ -382,16 +359,13 @@ function renderOverview() {
       </div>
       <div class="welcome-emoji">🛡️</div>
     </div>
-
     <div class="stats-grid">
       <div class="stat-card"><div class="stat-header"><div class="stat-icon">📊</div><span class="stat-trend blue">+8 this week</span></div><div class="stat-num">${total}</div><div class="stat-label">Total Grievances</div></div>
       <div class="stat-card"><div class="stat-header"><div class="stat-icon">⏳</div><span class="stat-trend red">${urgent} urgent</span></div><div class="stat-num">${pending}</div><div class="stat-label">Pending Review</div></div>
       <div class="stat-card"><div class="stat-header"><div class="stat-icon">⚙️</div><span class="stat-trend blue">Active</span></div><div class="stat-num">${inprog}</div><div class="stat-label">In Progress</div></div>
       <div class="stat-card"><div class="stat-header"><div class="stat-icon">👷</div><span class="stat-trend">On duty</span></div><div class="stat-num">${activeOff}</div><div class="stat-label">Active Officers</div></div>
     </div>
-
     <div class="divider"></div>
-
     <div class="content-grid">
       <div class="card">
         <div class="card-header">
@@ -409,19 +383,16 @@ function renderOverview() {
             <span class="g-badge ${badgeClass(g.status)}">${g.status}</span>
           </div>`).join('')}
       </div>
-
       <div style="display:flex;flex-direction:column;gap:16px">
         <div class="card">
           <div class="card-header"><span class="card-title">Quick Actions</span></div>
           <div class="quick-actions">
             <button class="action-btn" onclick="navigateTo('allissues')"><span class="action-icon">📋</span><span><span class="action-title">Review All Grievances</span><span class="action-sub">${pending} pending review</span></span><span class="action-arrow">→</span></button>
             <button class="action-btn" onclick="navigateTo('assign')"><span class="action-icon">👷</span><span><span class="action-title">Assign Officers</span><span class="action-sub">${_grievances.filter(g=>!g.assignedTo).length} unassigned</span></span><span class="action-arrow">→</span></button>
-            <button class="action-btn" onclick="navigateTo('reports')"><span class="action-icon">📈</span><span><span class="action-title">SLA Reports</span><span class="action-sub">View compliance metrics</span></span><span class="action-arrow">→</span></button>
+            <button class="action-btn" onclick="navigateTo('analytics')"><span class="action-icon">📊</span><span><span class="action-title">Analytics & Reports</span><span class="action-sub">View trends &amp; SLA metrics</span></span><span class="action-arrow">→</span></button>
             <button class="action-btn" onclick="navigateTo('users')"><span class="action-icon">👥</span><span><span class="action-title">Manage Users</span><span class="action-sub">${_users.length} total accounts</span></span><span class="action-arrow">→</span></button>
           </div>
         </div>
-
-        <!-- Officer Status -->
         <div class="card">
           <div class="card-header"><span class="card-title">Officer Status</span><span class="card-action" onclick="navigateTo('assign')">Assign →</span></div>
           ${_officers.map(o=>`
@@ -464,16 +435,13 @@ function renderAllGrievances() {
     </div>
     <div class="grievance-list" id="gList"></div>`;
 }
-
 function initAllGrievances() { _gSearch=''; _gStatus='all'; _gPri='all'; refreshGrievances(); }
-
 function refreshGrievances() {
   const bar  = document.getElementById('gSumBar');
   const list = document.getElementById('gList');
   _gSearch = (document.getElementById('gSearch')?.value||'').toLowerCase();
   _gStatus = document.getElementById('gStatusF')?.value||'all';
   _gPri    = document.getElementById('gPriF')?.value||'all';
-
   const counts = {all:_grievances.length,Pending:0,'In Progress':0,Resolved:0,urgent:0};
   _grievances.forEach(g=>{counts[g.status]++;if(g.priority==='HIGH'&&g.status!=='Resolved')counts.urgent++;});
   bar.innerHTML = `
@@ -482,14 +450,11 @@ function refreshGrievances() {
     <span class="sum-chip progress">In Progress ${counts['In Progress']}</span>
     <span class="sum-chip resolved">Resolved ${counts['Resolved']}</span>
     <span class="sum-chip urgent">🔴 Urgent ${counts.urgent}</span>`;
-
   const visible = _grievances.filter(g=>{
     const ms = !_gSearch||g.title.toLowerCase().includes(_gSearch)||g.citizen.includes(_gSearch)||g.category.toLowerCase().includes(_gSearch);
     return ms&&(_gStatus==='all'||g.status===_gStatus)&&(_gPri==='all'||g.priority===_gPri);
   });
-
   if (!visible.length) { list.innerHTML=`<div class="empty-state"><div class="empty-icon">🔍</div><p>No grievances match your filters.</p></div>`; return; }
-
   list.innerHTML = visible.map(g=>`
     <div class="grv-card" id="gcard-${g.id}">
       <div class="grv-header" onclick="toggleGCard('${g.id}')">
@@ -525,14 +490,11 @@ function refreshGrievances() {
       </div>
     </div>`).join('');
 }
-
 function toggleGCard(id) { document.getElementById('gcard-'+id)?.classList.toggle('expanded'); }
-
 function changeStatus(id, status) {
   const g = _grievances.find(g=>g.id===id);
   if (g) { g.status=status; refreshGrievances(); showToast(`Status updated to ${status} ✓`,'success'); }
 }
-
 function closeGrievance(id) {
   const g = _grievances.find(g=>g.id===id);
   if (!g) return;
@@ -540,7 +502,6 @@ function closeGrievance(id) {
     g.status='Resolved'; refreshGrievances(); showToast('Grievance closed','info');
   });
 }
-
 function quickAssign(grvId) {
   const g = _grievances.find(g=>g.id===grvId);
   if (!g) return;
@@ -562,7 +523,6 @@ function quickAssign(grvId) {
   document.body.appendChild(overlay);
   overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};
 }
-
 function doAssign(grvId) {
   const sel = document.getElementById('modalOfficerSel');
   if (!sel) return;
@@ -585,8 +545,6 @@ function renderAssign() {
         <input class="search-input" id="assignSearch" type="text" placeholder="Search unassigned grievances..." oninput="refreshAssignList()"/>
       </div>
     </div>
-
-    <!-- Officers Panel -->
     <div class="card" style="margin-bottom:20px">
       <div class="card-header"><span class="card-title">Active Officers</span></div>
       <table class="data-table">
@@ -602,7 +560,6 @@ function renderAssign() {
         </tbody>
       </table>
     </div>
-
     <div class="card">
       <div class="card-header">
         <span class="card-title">Unassigned Grievances</span>
@@ -611,20 +568,15 @@ function renderAssign() {
       <div id="assignList"></div>
     </div>`;
 }
-
 function initAssign() { refreshAssignList(); }
-
 function refreshAssignList() {
   const list  = document.getElementById('assignList');
   const count = document.getElementById('unassignedCount');
   _assignSearch = (document.getElementById('assignSearch')?.value||'').toLowerCase();
   const unassigned = _grievances.filter(g=>!g.assignedTo&&g.status!=='Resolved');
   if (count) count.textContent = unassigned.length + ' pending';
-
   const visible = unassigned.filter(g=>!_assignSearch||g.title.toLowerCase().includes(_assignSearch)||g.citizen.includes(_assignSearch));
-
   if (!visible.length) { list.innerHTML=`<div class="empty-state" style="border:none;background:none;padding:30px 0"><div class="empty-icon">🎉</div><p>All grievances have been assigned!</p></div>`; return; }
-
   const activeOff = _officers.filter(o=>o.status==='Active');
   list.innerHTML = visible.map(g=>`
     <div style="display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);flex-wrap:wrap" id="arow-${g.id}">
@@ -641,7 +593,6 @@ function refreshAssignList() {
       <button class="btn-sm green" onclick="assignFromList('${g.id}')">Assign ✓</button>
     </div>`).join('');
 }
-
 function assignFromList(grvId) {
   const sel = document.getElementById('offSel-'+grvId);
   if (!sel||!sel.value) { showToast('Please select an officer first','error'); return; }
@@ -673,9 +624,7 @@ function renderUsers() {
     </div>
     <div id="userGrid" style="display:flex;flex-direction:column;gap:10px"></div>`;
 }
-
 function initUsers() { _userSearch=''; _userRole='all'; refreshUsers(); }
-
 function refreshUsers() {
   _userSearch=(document.getElementById('userSearch')?.value||'').toLowerCase();
   _userRole=document.getElementById('userRoleF')?.value||'all';
@@ -697,7 +646,6 @@ function refreshUsers() {
       </div>
     </div>`).join('');
 }
-
 function deactivateUser(id) {
   const u=_users.find(u=>u.id===id);
   if(!u) return;
@@ -705,7 +653,6 @@ function deactivateUser(id) {
     u.status='Inactive'; refreshUsers(); showToast(`User ${u.username} deactivated`,'info');
   });
 }
-
 function showAddUserModal() {
   const overlay=document.createElement('div');
   overlay.className='modal-overlay';
@@ -725,7 +672,6 @@ function showAddUserModal() {
   document.body.appendChild(overlay);
   overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};
 }
-
 function addUser() {
   const name=document.getElementById('newName').value.trim();
   const user=document.getElementById('newUser').value.trim();
@@ -752,7 +698,7 @@ function renderReports() {
   ];
   const maxCat=Math.max(...catData.map(c=>c.count));
   return `
-    <div class="page-header"><h2>📊 SLA Reports & Analytics</h2><p>Performance metrics and compliance overview.</p></div>
+    <div class="page-header"><h2>📈 SLA Reports</h2><p>Performance metrics and compliance overview.</p></div>
     <div class="sla-grid">
       <div class="sla-card" style="animation-delay:0.05s"><div class="sla-num green">${slaRate}%</div><div class="sla-label">SLA Compliance Rate</div></div>
       <div class="sla-card" style="animation-delay:0.10s"><div class="sla-num amber">${_grievances.filter(g=>g.status!=='Resolved').length}</div><div class="sla-label">Open Issues</div></div>
@@ -783,42 +729,6 @@ function renderReports() {
           </tbody>
         </table>
       </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Resolution Time (avg days)</span></div>
-        <div class="bar-chart">
-          ${[
-            {cat:'Water Supply',days:2.1,color:'#3b7ff5'},
-            {cat:'Electricity', days:1.8,color:'#34d399'},
-            {cat:'Roads',       days:4.5,color:'#f87171'},
-            {cat:'Sanitation',  days:1.2,color:'#fbbf24'},
-            {cat:'Drainage',    days:3.0,color:'#a5b4fc'},
-          ].map(c=>`<div class="bar-item">
-            <span class="bar-label">${c.cat}</span>
-            <div class="bar-track"><div class="bar-fill" style="width:${Math.round((c.days/5)*100)}%;background:${c.color}"></div></div>
-            <span class="bar-val">${c.days}d</span>
-          </div>`).join('')}
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">Monthly Trend</span></div>
-        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
-          ${[{m:'Jan',s:18,r:14},{m:'Feb',s:22,r:19},{m:'Mar',s:15,r:8}].map(d=>`
-          <div style="display:flex;align-items:center;gap:12px">
-            <span style="font-size:0.78rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace;width:28px">${d.m}</span>
-            <div style="flex:1">
-              <div style="display:flex;gap:2px;height:8px;border-radius:4px;overflow:hidden;background:rgba(255,255,255,0.04)">
-                <div style="width:${Math.round((d.r/d.s)*100)}%;background:#34d399;border-radius:4px 0 0 4px"></div>
-                <div style="flex:1;background:rgba(245,158,11,0.3)"></div>
-              </div>
-            </div>
-            <span style="font-size:0.72rem;color:var(--text-soft);font-family:'JetBrains Mono',monospace;white-space:nowrap">${d.r}/${d.s}</span>
-          </div>`).join('')}
-          <div style="display:flex;gap:16px;margin-top:6px">
-            <span style="font-size:0.7rem;color:#34d399;font-family:'JetBrains Mono',monospace">■ Resolved</span>
-            <span style="font-size:0.7rem;color:#fbbf24;font-family:'JetBrains Mono',monospace">■ Pending</span>
-          </div>
-        </div>
-      </div>
     </div>`;
 }
 
@@ -829,60 +739,276 @@ function renderSettings() {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
       <div class="card">
         <div class="card-header"><span class="card-title">📋 SLA Configuration</span></div>
-        ${[
-          {label:'Default SLA (days)',  val:'7'},
-          {label:'High Priority SLA',  val:'2'},
-          {label:'Medium Priority SLA',val:'5'},
-          {label:'Low Priority SLA',   val:'10'},
-        ].map(s=>`<div class="form-group"><label class="form-label">${s.label}</label><input class="form-input" type="number" value="${s.val}"/></div>`).join('')}
+        ${[{label:'Default SLA (days)',val:'7'},{label:'High Priority SLA',val:'2'},{label:'Medium Priority SLA',val:'5'},{label:'Low Priority SLA',val:'10'}].map(s=>`<div class="form-group"><label class="form-label">${s.label}</label><input class="form-input" type="number" value="${s.val}"/></div>`).join('')}
         <button class="btn-primary" style="margin-top:8px" onclick="showToast('SLA settings saved ✓','success')"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z'/></svg>Save Settings</button>
       </div>
       <div class="card">
-        <div class="card-header"><span class="card-title">🔔 Notification Settings</span></div>
-        ${[
-          'Email notifications for new grievances',
-          'SMS alerts for HIGH priority issues',
-          'Daily digest report to admin',
-          'Auto-assign based on department',
-          'Escalation alerts after SLA breach',
-        ].map((label,i)=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)">
-          <span style="font-size:0.875rem;color:var(--text)">${label}</span>
-          <div onclick="toggleSwitch(this)" style="width:40px;height:22px;border-radius:20px;cursor:pointer;transition:all 0.2s;position:relative;background:${i<3?'var(--blue)':'rgba(255,255,255,0.1)'};border:1px solid ${i<3?'var(--blue)':'var(--border)'}">
-            <div style="position:absolute;top:2px;width:16px;height:16px;border-radius:50%;background:white;transition:all 0.2s;${i<3?'left:20px':'left:2px'}"></div>
-          </div>
-        </div>`).join('')}
-        <button class="btn-primary" style="margin-top:16px" onclick="showToast('Notification settings saved ✓','success')"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z'/></svg>Save Settings</button>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">🏛️ Department Management</span></div>
-        ${['Public Works','Sanitation','Electricity','Roads','Water Supply','Parks'].map(d=>`
-          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
-            <span style="font-size:0.875rem;color:var(--text)">${d}</span>
-            <div style="display:flex;gap:6px">
-              <button class="btn-sm" onclick="showToast('Edit dept coming soon','info')">✏️</button>
-              <button class="btn-sm danger" onclick="showToast('Cannot delete active dept','error')">🗑</button>
-            </div>
-          </div>`).join('')}
-        <button class="btn-secondary" style="width:100%;margin-top:12px;text-align:center;justify-content:center" onclick="showToast('Add department coming soon','info')">+ Add Department</button>
-      </div>
-      <div class="card">
         <div class="card-header"><span class="card-title">🔑 Admin Account</span></div>
-        <div class="info-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
           <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:600">Username</div><div style="font-size:0.875rem;color:var(--text);font-family:'JetBrains Mono',monospace">@admin_priya</div></div>
           <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:600">Role</div><div style="font-size:0.875rem;color:var(--blue-bright)">System Admin</div></div>
-          <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:600">Email</div><div style="font-size:0.875rem;color:var(--text);font-family:'JetBrains Mono',monospace">admin@civicpulse.gov</div></div>
-          <div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:600">Last Login</div><div style="font-size:0.875rem;color:var(--text);font-family:'JetBrains Mono',monospace">Today, 09:32 AM</div></div>
         </div>
         <button class="btn-primary" onclick="showToast('Password changed successfully 🔒','success')"><svg viewBox='0 0 24 24' fill='currentColor'><path d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z'/></svg>Change Password</button>
       </div>
     </div>`;
 }
 
-function toggleSwitch(el) {
-  const on=el.style.background===''||el.style.background.includes('var(--blue)');
-  el.style.background=on?'rgba(255,255,255,0.1)':'var(--blue)';
-  el.style.borderColor=on?'var(--border)':'var(--blue)';
-  el.querySelector('div').style.left=on?'2px':'20px';
+/* ═══════════════════════════════════════════════════
+   ── CHANGE 3: ANALYTICS & REPORTS FUNCTION (NEW) ──
+   This renders inside #dashboardContent, same as all
+   other sections. No new page, no new URL.
+═══════════════════════════════════════════════════ */
+function renderAnalytics() {
+  const total    = _grievances.length;
+  const resolved = _grievances.filter(g=>g.status==='Resolved').length;
+  const pending  = _grievances.filter(g=>g.status==='Pending').length;
+  const inprog   = _grievances.filter(g=>g.status==='In Progress').length;
+  const slaRate  = Math.round((resolved/total)*100);
+
+  /* ── Category breakdown from real _grievances data ── */
+  const catDefs = [
+    {name:'Water Supply',color:'#3b7ff5'},
+    {name:'Roads',       color:'#f87171'},
+    {name:'Sanitation',  color:'#fbbf24'},
+    {name:'Electricity', color:'#34d399'},
+    {name:'Drainage',    color:'#a5b4fc'},
+    {name:'Noise',       color:'#f472b6'},
+    {name:'Parks',       color:'#4ade80'},
+    {name:'Other',       color:'#8895aa'},
+  ];
+  const catCounts = catDefs.map(c =>
+    c.name === 'Other'
+      ? _grievances.filter(g=>!catDefs.slice(0,-1).map(x=>x.name).includes(g.category)).length
+      : _grievances.filter(g=>g.category===c.name).length
+  );
+
+  /* ── SVG Donut ── */
+  const donutSlices = (()=>{
+    let start=0; const cx=80,cy=80,r=60,inner=38;
+    return catDefs.map((c,i)=>{
+      const count=catCounts[i]; if(!count||!total) return '';
+      const pct=count/total, angle=pct*2*Math.PI;
+      const x1=cx+r*Math.sin(start),     y1=cy-r*Math.cos(start);
+      const x2=cx+r*Math.sin(start+angle),y2=cy-r*Math.cos(start+angle);
+      const xi1=cx+inner*Math.sin(start),  yi1=cy-inner*Math.cos(start);
+      const xi2=cx+inner*Math.sin(start+angle),yi2=cy-inner*Math.cos(start+angle);
+      const large=angle>Math.PI?1:0;
+      const d=`M ${xi1} ${yi1} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 ${large} 0 ${xi1} ${yi1} Z`;
+      start+=angle;
+      return `<path d="${d}" fill="${c.color}" opacity="0.92" stroke="var(--bg)" stroke-width="1.5"/>`;
+    }).join('');
+  })();
+
+  /* ── SLA per category ── */
+  const slaPct = [96,78,91,88,84,97,95,83];
+
+  /* ── Zone data ── */
+  const zones = [
+    {name:'Zone A',total:180,resolved:165,pending:15,sla:97},
+    {name:'Zone B',total:210,resolved:178,pending:32,sla:85},
+    {name:'Zone C',total:95, resolved:80, pending:15,sla:88},
+    {name:'Zone D',total:305,resolved:240,pending:65,sla:72},
+    {name:'Zone E',total:140,resolved:135,pending:5, sla:98},
+    {name:'Zone F',total:88, resolved:72, pending:16,sla:82},
+    {name:'Zone G',total:230,resolved:117,pending:113,sla:61},
+    {name:'Zone H',total:115,resolved:108,pending:7, sla:96},
+    {name:'Zone I',total:75, resolved:70, pending:5, sla:99},
+    {name:'Zone J',total:162,resolved:150,pending:12,sla:93},
+  ];
+  const zMax=Math.max(...zones.map(z=>z.total));
+
+  /* ── SVG Trend polyline ── */
+  const trendMonths=[{m:'Oct',f:185,r:160},{m:'Nov',f:210,r:190},{m:'Dec',f:198,r:185},{m:'Jan',f:245,r:220},{m:'Feb',f:230,r:215},{m:'Mar',f:180,r:217}];
+  const tMax=Math.max(...trendMonths.flatMap(m=>[m.f,m.r]));
+  const pts_f=trendMonths.map((m,i)=>({x:14+i*(86/(trendMonths.length-1)),y:92-Math.round((m.f/tMax)*76)}));
+  const pts_r=trendMonths.map((m,i)=>({x:14+i*(86/(trendMonths.length-1)),y:92-Math.round((m.r/tMax)*76)}));
+  const aF=`${pts_f[0].x},95 `+pts_f.map(p=>`${p.x},${p.y}`).join(' ')+` ${pts_f[pts_f.length-1].x},95`;
+  const aR=`${pts_r[0].x},95 `+pts_r.map(p=>`${p.x},${p.y}`).join(' ')+` ${pts_r[pts_r.length-1].x},95`;
+
+  return `
+  <div class="page-header">
+    <h2>📊 Analytics &amp; Reports</h2>
+    <p>Complaint distribution, SLA compliance &amp; zone-wise performance for Admin review.</p>
+  </div>
+
+  <!-- ── KPI Cards ── -->
+  <div class="stats-grid" style="margin-bottom:20px">
+    <div class="stat-card" style="animation-delay:.05s">
+      <div class="stat-header"><div class="stat-icon">📋</div><span class="stat-trend blue">+8 this week</span></div>
+      <div class="stat-num">${total}</div><div class="stat-label">Total Complaints</div>
+    </div>
+    <div class="stat-card" style="animation-delay:.10s">
+      <div class="stat-header"><div class="stat-icon">✅</div><span class="stat-trend">${slaRate}% rate</span></div>
+      <div class="stat-num">${resolved}</div><div class="stat-label">Resolved</div>
+    </div>
+    <div class="stat-card" style="animation-delay:.15s">
+      <div class="stat-header"><div class="stat-icon">⏳</div><span class="stat-trend amber">${inprog} active</span></div>
+      <div class="stat-num">${pending}</div><div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card" style="animation-delay:.20s">
+      <div class="stat-header"><div class="stat-icon">⚡</div><span class="stat-trend">▲ 2.1%</span></div>
+      <div class="stat-num">${slaRate}%</div><div class="stat-label">SLA Compliance</div>
+    </div>
+  </div>
+
+  <!-- ── Row 1: Donut + SLA Bars ── -->
+  <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:16px;margin-bottom:16px">
+
+    <div class="card" style="animation-delay:.1s">
+      <div class="card-header"><span class="card-title">Complaints by Category</span></div>
+      <div style="position:relative;width:160px;height:160px;margin:0 auto 16px">
+        <svg viewBox="0 0 160 160" width="160" height="160">
+          ${donutSlices}
+          <text x="80" y="76" text-anchor="middle" fill="#e8edf5" font-family="Outfit" font-weight="800" font-size="22">${total}</text>
+          <text x="80" y="91" text-anchor="middle" fill="#8895aa" font-family="Outfit" font-size="10">total</text>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        ${catDefs.map((c,i)=>catCounts[i]?`
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:9px;height:9px;border-radius:50%;background:${c.color};flex-shrink:0"></div>
+          <span style="font-size:0.74rem;color:var(--text-soft);flex:1">${c.name}</span>
+          <span style="font-size:0.74rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-weight:700">${catCounts[i]}</span>
+        </div>`:'').join('')}
+      </div>
+    </div>
+
+    <div class="card" style="animation-delay:.15s">
+      <div class="card-header">
+        <span class="card-title">SLA Performance by Category</span>
+        <span style="font-size:0.7rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace">On-time %</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:13px;margin-top:4px">
+        ${catDefs.map((c,i)=>{
+          const pct=slaPct[i]||80;
+          const col=pct>=90?'#34d399':pct>=80?'#fbbf24':'#f87171';
+          return `<div style="display:flex;align-items:center;gap:12px">
+            <span style="font-size:0.73rem;color:var(--text-soft);width:84px;flex-shrink:0;font-family:'JetBrains Mono',monospace">${c.name}</span>
+            <div style="flex:1;height:7px;background:rgba(255,255,255,0.06);border-radius:20px;overflow:hidden">
+              <div style="width:${pct}%;height:100%;background:${col};border-radius:20px"></div>
+            </div>
+            <span style="font-size:0.72rem;color:${col};font-family:'JetBrains Mono',monospace;font-weight:700;width:34px;text-align:right">${pct}%</span>
+          </div>`;
+        }).join('')}
+      </div>
+      <div style="display:flex;gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+        <span style="font-size:0.68rem;color:#34d399;font-family:'JetBrains Mono',monospace">■ ≥90 On Track</span>
+        <span style="font-size:0.68rem;color:#fbbf24;font-family:'JetBrains Mono',monospace">■ 80–89 At Risk</span>
+        <span style="font-size:0.68rem;color:#f87171;font-family:'JetBrains Mono',monospace">■ &lt;80 Breach</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Row 2: Heat Map + Trend ── -->
+  <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:16px;margin-bottom:16px">
+
+    <div class="card" style="animation-delay:.2s">
+      <div class="card-header" style="flex-wrap:wrap;gap:6px">
+        <span class="card-title">Heat Map by Zone</span>
+        <span style="background:rgba(239,68,68,0.12);color:#f87171;font-size:0.67rem;font-weight:700;padding:3px 8px;border-radius:20px;border:1px solid rgba(239,68,68,0.25)">🔴 Red Zone Alert</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:10px">
+        ${zones.map(z=>{
+          const intensity=z.total/zMax;
+          const isRed=z.sla<75;
+          const bg=isRed?`rgba(239,68,68,${0.28+intensity*0.55})`:`rgba(26,86,219,${0.14+intensity*0.65})`;
+          const bdr=isRed?'rgba(239,68,68,0.35)':'rgba(26,86,219,0.3)';
+          return `<div title="${z.name}: ${z.total} complaints · SLA ${z.sla}%"
+            style="background:${bg};border:1px solid ${bdr};border-radius:8px;padding:8px 4px;text-align:center;cursor:default;transition:transform 0.15s"
+            onmouseover="this.style.transform='scale(1.07)'" onmouseout="this.style.transform='scale(1)'">
+            <div style="font-size:0.58rem;font-weight:700;color:rgba(255,255,255,0.85);margin-bottom:2px">${z.name}</div>
+            <div style="font-size:0.88rem;font-weight:800;color:#fff">${z.total}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:0.68rem;color:var(--text-dim)">
+        <span>Low</span>
+        <div style="flex:1;height:5px;border-radius:3px;background:linear-gradient(to right,rgba(26,86,219,0.2),rgba(26,86,219,0.8),rgba(239,68,68,0.85))"></div>
+        <span>High (Red Zone)</span>
+      </div>
+    </div>
+
+    <div class="card" style="animation-delay:.25s">
+      <div class="card-header">
+        <span class="card-title">Monthly Complaint Trend</span>
+        <span style="font-size:0.7rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace">Filed vs Resolved</span>
+      </div>
+      <svg viewBox="0 0 100 102" width="100%" style="overflow:visible">
+        <defs>
+          <linearGradient id="agf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b7ff5" stop-opacity="0.3"/><stop offset="100%" stop-color="#3b7ff5" stop-opacity="0.01"/></linearGradient>
+          <linearGradient id="agr" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34d399" stop-opacity="0.3"/><stop offset="100%" stop-color="#34d399" stop-opacity="0.01"/></linearGradient>
+        </defs>
+        ${[20,40,60,80].map(y=>`<line x1="5" y1="${95-y*0.72}" x2="99" y2="${95-y*0.72}" stroke="rgba(255,255,255,0.04)" stroke-width="0.4"/>`).join('')}
+        <polygon points="${aF}" fill="url(#agf)"/>
+        <polygon points="${aR}" fill="url(#agr)"/>
+        <polyline points="${pts_f.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="#3b7ff5" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+        <polyline points="${pts_r.map(p=>`${p.x},${p.y}`).join(' ')}" fill="none" stroke="#34d399" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+        ${pts_f.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="2" fill="#3b7ff5"/>`).join('')}
+        ${pts_r.map(p=>`<circle cx="${p.x}" cy="${p.y}" r="2" fill="#34d399"/>`).join('')}
+        ${trendMonths.map((m,i)=>`<text x="${pts_f[i].x}" y="100" text-anchor="middle" fill="#4e5a6e" font-size="4.5" font-family="JetBrains Mono">${m.m}</text>`).join('')}
+      </svg>
+      <div style="display:flex;gap:16px;margin-top:6px">
+        <span style="font-size:0.7rem;color:#3b7ff5;font-family:'JetBrains Mono',monospace">■ Filed</span>
+        <span style="font-size:0.7rem;color:#34d399;font-family:'JetBrains Mono',monospace">■ Resolved</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Zone Summary Table ── -->
+  <div class="card" style="animation-delay:.3s">
+    <div class="card-header" style="flex-wrap:wrap;gap:8px">
+      <span class="card-title">Zone-wise Complaint Summary</span>
+      <input type="text" id="azoneSearch" placeholder="Search zone…"
+        oninput="filterAnalyticsZones(this.value)"
+        style="padding:6px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Outfit',sans-serif;font-size:0.8rem;outline:none;width:170px"/>
+    </div>
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:0.83rem">
+        <thead>
+          <tr>
+            ${['Zone','Total','Resolved','Pending','SLA %','Status'].map(h=>`<th style="font-size:0.67rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:600;text-align:left;padding:0 14px 10px;border-bottom:1px solid var(--border)">${h}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody id="analyticsZoneBody">
+          ${zones.map(z=>{
+            const bc=z.sla>=90?'#34d399':z.sla>=75?'#fbbf24':'#f87171';
+            const [sbg,scol,sbdr]=z.sla>=90
+              ?['rgba(16,185,129,0.1)','#34d399','rgba(16,185,129,0.2)']
+              :z.sla>=75
+              ?['rgba(245,158,11,0.1)','#fbbf24','rgba(245,158,11,0.2)']
+              :['rgba(239,68,68,0.1)','#f87171','rgba(239,68,68,0.2)'];
+            const st=z.sla>=90?'On Track':z.sla>=75?'At Risk':'🔴 Red Zone';
+            return `<tr class="azone-row"
+              onmouseover="this.querySelectorAll('td').forEach(td=>td.style.background='rgba(255,255,255,0.02)')"
+              onmouseout="this.querySelectorAll('td').forEach(td=>td.style.background='')">
+              <td style="padding:11px 14px;border-bottom:1px solid var(--border);font-weight:700;color:var(--text)">${z.name}</td>
+              <td style="padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-soft);font-family:'JetBrains Mono',monospace">${z.total}</td>
+              <td style="padding:11px 14px;border-bottom:1px solid var(--border);color:#34d399;font-weight:700;font-family:'JetBrains Mono',monospace">${z.resolved}</td>
+              <td style="padding:11px 14px;border-bottom:1px solid var(--border);color:#fbbf24;font-weight:700;font-family:'JetBrains Mono',monospace">${z.pending}</td>
+              <td style="padding:11px 14px;border-bottom:1px solid var(--border)">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;min-width:55px">
+                    <div style="width:${z.sla}%;height:100%;background:${bc};border-radius:3px"></div>
+                  </div>
+                  <span style="font-size:0.73rem;font-weight:700;color:${bc};font-family:'JetBrains Mono',monospace;min-width:32px">${z.sla}%</span>
+                </div>
+              </td>
+              <td style="padding:11px 14px;border-bottom:1px solid var(--border)">
+                <span style="display:inline-block;padding:3px 10px;border-radius:20px;font-size:0.67rem;font-weight:700;font-family:'JetBrains Mono',monospace;background:${sbg};color:${scol};border:1px solid ${sbdr}">${st}</span>
+              </td>
+            </tr>`;
+          }).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+/* ── Zone search helper for analytics table ── */
+function filterAnalyticsZones(val) {
+  document.querySelectorAll('.azone-row').forEach(row => {
+    row.style.display = row.querySelector('td').textContent.toLowerCase().includes(val.toLowerCase()) ? '' : 'none';
+  });
 }
 
 /* ─── HELPERS ─── */
@@ -895,7 +1021,6 @@ function showModal(title,body,onConfirm) {
   overlay.querySelector('#mk').onclick=()=>{overlay.remove();onConfirm();};
   overlay.onclick=e=>{if(e.target===overlay)overlay.remove();};
 }
-
 function showToast(msg,type='info') {
   const el=document.getElementById('toast');
   const icons={success:'✅ ',error:'❌ ',info:'⚡ '};
@@ -903,7 +1028,6 @@ function showToast(msg,type='info') {
   el.className='toast show';
   setTimeout(()=>el.classList.remove('show'),3000);
 }
-
 function logout() { window.location.href='/index.html'; }
 
 buildNav();

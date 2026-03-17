@@ -6,6 +6,11 @@
 - Feedback & Rating system
 - Admin & Officer dashboards
 
-//a Tech Stack
+// Tech Stack
 - Backend: Spring Boot, Java 17, MySQL
 - Frontend: HTML, CSS, JavaScript
+
+// How to Run
+- Start MySQL
+- Run the Spring Boot application
+- Open browser at http://localhost:8080
